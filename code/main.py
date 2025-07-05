@@ -8,6 +8,7 @@ from btn import Button
 from menu import menu
 from mnst import generateRandomMnst
 from menu import displayText
+from player import Player
 
 pygame.init()
 
@@ -28,10 +29,13 @@ item = Button((218,320),(40,40),pygame.image.load(resource_path("assets/btns/ite
 monsters = []
 pygame.mouse.set_visible(False)
 btns = [fight]
+player = Player()
 
 while run:
     if(gameState == "menu"):
         gameState,run = menu(window)
+        player = Player()
+        monsters.clear()
     elif(gameState == "game"):
 
         mousePoS = pygame.mouse.get_pos()
@@ -43,20 +47,30 @@ while run:
             if(event.type == pygame.QUIT):
                 gameState = "menu"
 
+
+        for mns in monsters:
+            if(mns.hp < 1):
+                monsters.remove(mns)
+            handleMonster(mns,window)
+            if(turn == "monster"):
+                player.getHit(mns.attack)
+                turn = "player"
+
         if(len(monsters) <1):
             newMonst = generateRandomMnst(mnsAssets)
             monsters.append(newMonst)
 
-        for mns in monsters:
-            handleMonster(mns,window)
 
         for btn in btns:
             btn.draw(window,mousePoS)
-            if(btn.isClicked(mousePoS,mousePressed)):
+            if(btn.isClicked(mousePoS,mousePressed) and turn == "player"):
                 if(btn.name == "fight"):
-                    pass
+                    monsters[0].getHit(player.getDmg())
                 if(btn.name == "item"):
                     pass
-
+                turn = "monster"
+        
+        print(player.hp)
+        print(monsters[0].hp)
         pygame.display.update() #updating screen each frame
         clock.tick(60)
