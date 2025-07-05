@@ -46,3 +46,7 @@ def loadMonsterAssets(monsterFolderPath):
         allMonsters.append(frames)
 
     return allMonsters
+
+def handleMonster(monster,window):
+    monster.update()
+    monster.draw(window)
