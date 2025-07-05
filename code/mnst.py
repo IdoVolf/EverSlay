@@ -1,4 +1,5 @@
 import pygame
+import os
 pygame.init()
 
 class Monster:
@@ -23,3 +24,23 @@ class Monster:
     def draw(self,window):
         img = self.assets[self.currentFrame]
         window.blit(img,self.pos)
+
+
+def loadMonsterAssets(monsterFolderPath):
+    allMonsters = []
+
+    for monsterName in os.listdir(monsterFolderPath):
+        monsterPath = os.path.join(monsterFolderPath, monsterName)
+        if not os.path.isdir(monsterPath):
+            continue  # Skip files, only load folders
+
+        frames = []
+        for fileName in sorted(os.listdir(monsterPath)):
+            if fileName.endswith(".png"):
+                imgPath = os.path.join(monsterPath, fileName)
+                img = pygame.image.load(imgPath).convert_alpha()
+                frames.append(img)
+        
+        allMonsters.append(frames)
+
+    return allMonsters

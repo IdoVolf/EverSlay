@@ -1,6 +1,7 @@
 import pygame
 from reso import resource_path
 from mnst import Monster
+from mnst import loadMonsterAssets
 pygame.init()
 
 #stting vars
@@ -11,10 +12,10 @@ run  = True
 
 #loading shit
 bg = pygame.image.load(resource_path("assets/battle ui/battleBox.png"))
+mnsAssets = loadMonsterAssets("assets/mns")
 
 while run:
     window.blit(bg,bg.get_rect()) #drawing bg
-
     for event in pygame.event.get(): #basic event handling
         if(event.type == pygame.QUIT):
             run = False
