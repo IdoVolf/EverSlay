@@ -5,6 +5,7 @@ from mnst import loadMonsterAssets
 from mnst import handleMonster
 from bg import Background
 from btn import Button
+from menu import menu
 
 pygame.init()
 
@@ -22,25 +23,30 @@ fight = Button((118,320),(40,40),pygame.image.load(resource_path("assets/btns/fi
 monsters = []
 pygame.mouse.set_visible(False)
 btns = [fight]
+gameState = "menu"
 
 while run:
-    mousePoS = pygame.mouse.get_pos()
-    mousePressed = pygame.mouse.get_pressed()
-    window.blit(bg,bg.get_rect()) #drawing battle box
-    window.blit(cursor,mousePoS)
+    if(gameState == "menu"):
+        gameState,run = menu(window)
+    elif(gameState == "game"):
 
-    for event in pygame.event.get(): #basic event handling
-        if(event.type == pygame.QUIT):
-            run = False
+        mousePoS = pygame.mouse.get_pos()
+        mousePressed = pygame.mouse.get_pressed()
+        window.blit(bg,bg.get_rect()) #drawing battle box
+        window.blit(cursor,mousePoS)
 
-    for mns in monsters:
-        handleMonster(mns,window)
+        for event in pygame.event.get(): #basic event handling
+            if(event.type == pygame.QUIT):
+                gameState = "menu"
 
-    for btn in btns:
-        btn.draw(window,mousePoS)
-        if(btn.isClicked(mousePoS,mousePressed)):
-            if(btn.name == "fight"):
-                print("test")
+        for mns in monsters:
+            handleMonster(mns,window)
 
-    pygame.display.update() #updating screen each frame
-    clock.tick(60)
+        for btn in btns:
+            btn.draw(window,mousePoS)
+            if(btn.isClicked(mousePoS,mousePressed)):
+                if(btn.name == "fight"):
+                    print("test")
+
+        pygame.display.update() #updating screen each frame
+        clock.tick(60)
