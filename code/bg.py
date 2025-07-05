@@ -21,6 +21,4 @@ class Background:
         img = self.assets[self.currentFrame]
         window.blit(img,self.pos)
 
-import pygame
-import os
 

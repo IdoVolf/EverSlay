@@ -3,11 +3,11 @@ import os
 pygame.init()
 
 class Monster:
-    def __init__(self,assets,hp,attack,deffence,scale,pos= (300,148)):
+    def __init__(self,assets,hp,attack,defense,scale,pos= (300,148)):
         self.assets = assets # a list of pygame images not file paths! (planing to laod the images when game start )
         self.hp =hp
         self.attack = attack
-        self.deffence = deffence
+        self.defense = defense
         self.pos = pos
         self.currentFrame = 0
         self.animDelay = 100
@@ -26,6 +26,11 @@ class Monster:
         img = self.assets[self.currentFrame]
         img = pygame.transform.scale(img,self.scale)
         window.blit(img,self.pos)
+
+    def getHit(self,dmg):
+        if(dmg > self.defense):
+            self.hp = self.hp - (dmg-self.deffence)
+        return
 
 
 def loadMonsterAssets(monsterFolderPath):
