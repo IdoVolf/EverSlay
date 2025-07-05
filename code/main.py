@@ -15,10 +15,13 @@ bg = pygame.image.load(resource_path("assets/battle ui/battleBox.png"))
 mnsAssets = loadMonsterAssets("assets/mns")
 
 while run:
+    mousePoS = pygame.mouse.get_pos()
+
     window.blit(bg,bg.get_rect()) #drawing bg
     for event in pygame.event.get(): #basic event handling
         if(event.type == pygame.QUIT):
             run = False
+
 
 
     pygame.display.update() #updating screen each frame

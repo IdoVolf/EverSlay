@@ -3,7 +3,7 @@ import os
 pygame.init()
 
 class Monster:
-    def __init__(self,assets,hp,attack,deffence,pos):
+    def __init__(self,assets,hp,attack,deffence,scale,pos= (300,148)):
         self.assets = assets # a list of pygame images not file paths! (planing to laod the images when game start )
         self.hp =hp
         self.attack = attack
@@ -12,6 +12,7 @@ class Monster:
         self.currentFrame = 0
         self.animDelay = 100
         self.lastFrame = 0
+        self.scale = scale
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -23,6 +24,7 @@ class Monster:
 
     def draw(self,window):
         img = self.assets[self.currentFrame]
+        img = pygame.transform.scale(img,self.scale)
         window.blit(img,self.pos)
 
 
