@@ -31,7 +31,8 @@ class Monster:
     def getHit(self,dmg):
         if(dmg > self.defense):
             self.hp = self.hp - (dmg-self.defense)
-        return
+        else:
+            self.hp -=1
 
 
 def loadMonsterAssets(monsterFolderPath):

@@ -7,8 +7,10 @@ armorToDefense = {"blue shirt":2,"baseball hat":3,"cupboard armor":6,"golden cro
 class Player:
     def __init__(self):
         self.hp = 50
-        self.weapon = "rusty knife"
+        self.weapon = "stick"
         self.armor = "blue shirt"
+        self.maxHp = 50
+        self.monsterKilled = 0
         
     def getHit(self,dmg):
         defense = armorToDefense[self.armor]
@@ -18,3 +20,6 @@ class Player:
     
     def getDmg(self):
         return weaponToDmg[self.weapon]
+    
+    def getDefense(self):
+        return armorToDefense[self.armor]

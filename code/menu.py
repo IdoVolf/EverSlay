@@ -7,8 +7,8 @@ def menu(window):
     clock = pygame.time.Clock()
     cursor = pygame.image.load(resource_path("assets/cursors/crs1.png"))
     bg = pygame.image.load(resource_path("assets/menuBg.png"))
-    play = Button((320,190),(50,50),pygame.image.load(resource_path("assets/btns/playBtn1.png")),pygame.image.load(resource_path("assets/btns/playBtn2.png")),"play")
-    exit = Button((320,270),(50,50),pygame.image.load(resource_path("assets/btns/exitBtn1.png")),pygame.image.load(resource_path("assets/btns/exitBtn2.png")),"exit")
+    play = Button((290,190),(50,50),pygame.image.load(resource_path("assets/btns/playBtn1.png")),pygame.image.load(resource_path("assets/btns/playBtn2.png")),"play")
+    exit = Button((290,270),(50,50),pygame.image.load(resource_path("assets/btns/exitBtn1.png")),pygame.image.load(resource_path("assets/btns/exitBtn2.png")),"exit")
     btns = [play,exit]
 
     while True:
