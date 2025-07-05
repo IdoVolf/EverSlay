@@ -15,6 +15,9 @@ pygame.init()
 #stting vars
 winSize = (640,380)
 window = pygame.display.set_mode(winSize)
+pygame.display.set_caption("EverSlay")
+icon = pygame.image.load(resource_path("assets/btns/playBtn1.png"))
+pygame.display.set_icon(icon)
 clock = pygame.time.Clock()
 run  = True
 gameState = "menu"
@@ -55,6 +58,7 @@ while run:
         for mns in monsters:
             if(mns.hp < 1):
                 monsters.remove(mns)
+                player.monsterKilled +=1
             handleMonster(mns,window)
             if(turn == "monster" and now - lastTurnTime > enemyActDelay):
                 lastTurnTime =now
@@ -76,12 +80,12 @@ while run:
                 lastTurnTime = pygame.time.get_ticks()
                 turn = "monster"
 
-        displayText(window,f"Your health : {player.hp}/{player.maxHp}",(400,300),myFont)
+        displayText(window,f"Your health : {player.hp}/{player.maxHp}",(400,300),myFont,(0,0,0))
         displayText(window,f"{monsters[0].hp}",(320,128),myFont,(0,0,0))
         displayText(window,f"monster defense : {monsters[0].defense}",(70,70),myFont,(0,0,0))
         displayText(window,f"monster attack : {monsters[0].attack}",(70,90),myFont,(0,0,0))
-        displayText(window,f"Your weapon : {player.weapon} - {player.getDmg()}",(400,320),myFont)
-        displayText(window,f"Your armor : {player.armor} - {player.getDefense()}",(400,340),myFont)
-        displayText(window,f"Monsters killed : {player.monsterKilled}",(400,360),myFont)
+        displayText(window,f"Your weapon : {player.weapon} - {player.getDmg()}",(400,320),myFont,(0,0,0))
+        displayText(window,f"Your armor : {player.armor} - {player.getDefense()}",(400,340),myFont,(0,0,0))
+        displayText(window,f"Monsters killed : {player.monsterKilled}",(400,360),myFont,(0,0,0))
         pygame.display.update() #updating screen each frame
         clock.tick(60)
