@@ -33,3 +33,6 @@ def menu(window):
         pygame.display.update()
         clock.tick(60)
         
+def displayText(window, text, pos, font, color=(255, 255, 255)):
+    txt = font.render(text, True, color)
+    window.blit(txt, pos)

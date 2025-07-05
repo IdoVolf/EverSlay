@@ -1,5 +1,6 @@
 import pygame
 import os
+import random
 pygame.init()
 
 class Monster:
@@ -55,3 +56,7 @@ def loadMonsterAssets(monsterFolderPath):
 def handleMonster(monster,window):
     monster.update()
     monster.draw(window)
+
+def generateRandomMnst(assets):
+    newMonst = Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),random.randint(3,5),(48,48))
+    return newMonst
