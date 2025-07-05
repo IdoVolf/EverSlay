@@ -1,7 +1,7 @@
 import pygame
 pygame.init()
 
-winSize = (480,270)
+winSize = (640,380)
 window = pygame.display.set_mode(winSize)
 clock = pygame.time.Clock()
 run  = True
