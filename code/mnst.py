@@ -1,6 +1,7 @@
 import pygame
 import os
 import random
+from reso import resource_path
 pygame.init()
 
 class Monster:
@@ -68,3 +69,23 @@ def handleMonster(monster,window):
 def generateRandomMnst(assets):
     newMonst = Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),random.randint(3,5),(88,88))
     return newMonst
+
+
+indic = [pygame.image.load(resource_path("assets/uniqe/indicator/indicator1.png")),
+         pygame.image.load(resource_path("assets/uniqe/indicator/indicator2.png")),
+         pygame.image.load(resource_path("assets/uniqe/indicator/indicator3.png")),
+         pygame.image.load(resource_path("assets/uniqe/indicator/indicator4.png")),
+         pygame.image.load(resource_path("assets/uniqe/indicator/indicator5.png")),
+         pygame.image.load(resource_path("assets/uniqe/indicator/indicator6.png")),
+         pygame.image.load(resource_path("assets/uniqe/indicator/indicator7.png"))]
+
+
+def drawIndicator(window, pos, lastFrame, delay, frame):
+    now = pygame.time.get_ticks()
+    if now - lastFrame > delay:
+        frame += 1
+        if frame > len(indic) - 1:
+            frame = 0
+        lastFrame = now
+    window.blit(pygame.transform.scale(indic[frame],(48,48)), pos)
+    return lastFrame, frame

@@ -1,6 +1,6 @@
 import pygame
 from reso import resource_path
-from mnst import Monster, loadMonsterAssets, handleMonster, generateRandomMnst
+from mnst import Monster, loadMonsterAssets, handleMonster, generateRandomMnst,drawIndicator
 from bg import Background
 from btn import Button
 from menu import menu, displayText
@@ -25,6 +25,9 @@ pygame.mouse.set_visible(False)
 player = Player()
 killPriority = False
 target =1
+delay = 100
+lastFrame = 0
+frame = 0
 
 myFont = pygame.font.Font(None, 24)
 bg = pygame.image.load(resource_path("assets/battle ui/battleBox.png"))
@@ -45,16 +48,19 @@ btns = [fight, item, exit]
 slash = pygame.mixer.Sound(resource_path("assets/sound/slash.mp3"))
 bite = pygame.mixer.Sound(resource_path("assets/sound/monster-bite.mp3"))
 
-encounterNum = 3
+encounterNum = 1
 turnIndex = 0
 monsterSlots = [(260, 148), (50, 148), (450, 148)]  # slots: left(0), center(1), right(2)
 slotStatus = [None, None, None]  # holds Monsters or None
 slashPoss = [(50,176),(282, 176),(450,176)]
+indicPoses = [(70,30),(302,30),(470,30)]
+
 while run:
     if gameState == "menu":
         gameState, run = menu(window)
         player = Player()
         monsters.clear()
+        encounterNum = 1
         slotStatus = [None, None, None]
         turn = "player"
         killPriority = False
@@ -71,6 +77,7 @@ while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameState = "menu"
+
 
         for btn in btns:
             btn.draw(window, mousePoS)
@@ -128,7 +135,10 @@ while run:
 
         # Player attack animation
         if player.isAttacking:
-            player.drawAnims(window,slashPoss[target])
+            if(len(monsters)>1):
+                player.drawAnims(window,slashPoss[target])
+            else:
+                player.drawAnims(window,slashPoss[target+1])
             if pygame.time.get_ticks() - player.attackStart >= player.attackDuration:
                 player.isAttacking = False
                 if not killPriority:
@@ -139,10 +149,13 @@ while run:
                     killPriority = False
 
         # HUD
+        if(len(monsters)>1):
+            lastFrame, frame = drawIndicator(window, indicPoses[target], lastFrame, delay, frame)
+        else:
+            lastFrame, frame = drawIndicator(window, indicPoses[target+1], lastFrame, delay, frame)
         displayText(window, f"Your health : {player.hp}/{player.maxHp} hp", (350, 300), myFont, (0, 0, 0))
         displayText(window, f"Your weapon : {player.weapon} - {player.getDmg()} dmg", (350, 320), myFont, (0, 0, 0))
         displayText(window, f"Your armor : {player.armor} - {player.getDefense()} def", (350, 340), myFont, (0, 0, 0))
         displayText(window, f"Monsters killed : {player.monsterKilled}", (350, 360), myFont, (0, 0, 0))
-        displayText(window, f"Current target : {target+1}", (60, 50), myFont, (0, 0, 0))
         pygame.display.update()
         clock.tick(60)
