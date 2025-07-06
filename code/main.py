@@ -53,7 +53,7 @@ turnIndex = 0
 monsterSlots = [(260, 148), (50, 148), (450, 148)]  # slots: left(0), center(1), right(2)
 slotStatus = [None, None, None]  # holds Monsters or None
 slashPoss = [(50,176),(282, 176),(450,176)]
-indicPoses = [(70,30),(302,30),(470,30)]
+indicPoses = [(55,30),(282,30),(450,30)]
 
 while run:
     if gameState == "menu":
@@ -133,6 +133,20 @@ while run:
         monsters = [slotStatus[1], slotStatus[0], slotStatus[2]]
         monsters = [m for m in monsters if m is not None]
 
+        if(len(monsters) ==1):
+            if(monsters[0].pos[0] != 260):
+                monsters[0].pos = (260,148)
+            target =0
+
+        if(len(monsters) == 2):
+            if(monsters[1].pos[0] == 450):
+                monsters[1].pos = (260,148)
+            if(target == 2):
+                target =0
+            
+            if(monsters[1].pos == monsters[0].pos):
+                monsters[1].pos = (50,148)
+
         # Player attack animation
         if player.isAttacking:
             if(len(monsters)>1):
@@ -147,6 +161,16 @@ while run:
                 else:
                     turn = "player"
                     killPriority = False
+
+        if(player.monsterKilled %5==0):
+            encounterNum = 3
+        else:
+            encounterNum =1
+        
+        if(player.monsterKilled %7==0):
+            encounterNum = 2
+        else:
+            encounterNum =1
 
         # HUD
         if(len(monsters)>1):
