@@ -27,8 +27,8 @@ enemyActDelay = 1000  # milliseconds
 lastTurnTime = 0
 monsters = []
 pygame.mouse.set_visible(False)
-
 player = Player()
+killPriority= False
 
 #loading shit
 myFont = pygame.font.Font(None, 24)
@@ -41,13 +41,13 @@ item = Button((218,320),(40,40),pygame.image.load(resource_path("assets/btns/ite
 btns = [fight,item,exit]
 slash = pygame.mixer.Sound(resource_path("assets/sound/slash.mp3"))
 bite = pygame.mixer.Sound(resource_path("assets/sound/monster-bite.mp3"))
+encounterNum =1
 while run:
     if(gameState == "menu"):
         gameState,run = menu(window)
         player = Player()
         monsters.clear()
     elif(gameState == "game"):
-        doorEx = True
         now = pygame.time.get_ticks()
         mousePoS = pygame.mouse.get_pos()
         mousePressed = pygame.mouse.get_pressed()
@@ -57,23 +57,6 @@ while run:
         for event in pygame.event.get(): #basic event handling
             if(event.type == pygame.QUIT):
                 gameState = "menu"
-
-
-        for mns in monsters:
-            if(mns.hp < 1):
-                monsters.remove(mns)
-                player.monsterKilled +=1
-            handleMonster(mns,window)
-            if(turn == "monster" and now - lastTurnTime > enemyActDelay):
-                lastTurnTime =now
-                bite.play()
-                player.getHit(mns.attack)
-                turn = "player"
-
-        if(len(monsters) <1):
-            newMonst = generateRandomMnst(mnsAssets)
-            monsters.append(newMonst)
-
 
         for btn in btns:
             btn.draw(window,mousePoS)
@@ -89,16 +72,42 @@ while run:
                     gameState = "menu"
                     
 
+        for mns in monsters:
+            if(mns.hp < 1):
+                monsters.remove(mns)
+                player.monsterKilled +=1
+                turn = "player"
+                killPriority = True
+                break
+            handleMonster(mns,window)
+            if(turn == "monster" and now - lastTurnTime > enemyActDelay):
+                lastTurnTime =now
+                bite.play()
+                player.getHit(mns.attack)
+                if(mns == monsters[-1]):
+                    turn = "player"
+
+        if(len(monsters) <encounterNum):
+            newMonst = generateRandomMnst(mnsAssets)
+            monsters.append(newMonst)
+
+        if(len(monsters) > 1):
+            monsters[1].pos = (50,148)
+        if(len(monsters) >2):
+            monsters[2].pos = (470,148)
+
 
 
         if player.isAttacking:
            player.drawAnims(window)
            if pygame.time.get_ticks() - player.attackStart >= player.attackDuration:
             player.isAttacking = False
-            turn = "monster"
-            lastTurnTime = pygame.time.get_ticks()
-
-
+            if(not killPriority):
+                turn = "monster"
+                lastTurnTime = pygame.time.get_ticks()
+            else:
+                turn = "player"
+                killPriority = False
 
 
         displayText(window,f"Your health : {player.hp}/{player.maxHp} hp",(400,300),myFont,(0,0,0))
