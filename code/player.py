@@ -13,7 +13,7 @@ slashAnim = [pygame.image.load(resource_path("assets/uniqe/slash1.png")),pygame.
 class Player:
     def __init__(self):
         self.hp = 50
-        self.weapon = "great Sword"
+        self.weapon = "rusty knife"
         self.armor = "blue shirt"
         self.maxHp = 50
         self.monsterKilled = 0
