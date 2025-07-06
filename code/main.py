@@ -43,6 +43,9 @@ slash = pygame.mixer.Sound(resource_path("assets/sound/slash.mp3"))
 bite = pygame.mixer.Sound(resource_path("assets/sound/monster-bite.mp3"))
 encounterNum =3
 turnIndex = 0
+monsterSlots = [(260, 148), (50, 148), (450, 148)]  # slot 0, 1, 2
+slotStatus = [None, None, None]  # each holds either a Monster or None
+
 while run:
     if(gameState == "menu"):
         gameState,run = menu(window)
@@ -77,8 +80,10 @@ while run:
             displayText(window,f"monster defense : {mns.defense}",(mns.pos[0],mns.pos[1]-50),myFont,(0,0,0))
             displayText(window,f"monster attack : {mns.attack}",(mns.pos[0],mns.pos[1]-70),myFont,(0,0,0))
             if(mns.hp < 1):
+                deadIndex = slotStatus.index(mns)
+                slotStatus[deadIndex] = None
                 monsters.remove(mns)
-                player.monsterKilled +=1
+                player.monsterKilled += 1
                 turn = "player"
                 killPriority = True
                 break
@@ -94,14 +99,14 @@ while run:
                     turn = "player"
             
 
-        if(len(monsters) <encounterNum):
-            newMonst = generateRandomMnst(mnsAssets)
-            monsters.append(newMonst)
+        for i in range(len(slotStatus)):
+            if slotStatus[i] is None:
+                newMonst = generateRandomMnst(mnsAssets)
+                newMonst.pos = monsterSlots[i]
+                slotStatus[i] = newMonst
+                monsters.append(newMonst)
+                break
 
-        if(len(monsters) > 1):
-            monsters[1].pos = (50,148)
-        if(len(monsters) >2):
-            monsters[2].pos = (450,148)
 
 
 
