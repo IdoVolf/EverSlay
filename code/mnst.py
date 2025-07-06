@@ -4,7 +4,7 @@ import random
 pygame.init()
 
 class Monster:
-    def __init__(self,assets,hp,attack,defense,scale,pos= (300,148)):
+    def __init__(self,assets,hp,attack,defense,scale,pos= (276,148)):
         self.assets = assets # a list of pygame images not file paths! (planing to laod the images when game start )
         self.hp =hp
         self.attack = attack
@@ -59,5 +59,5 @@ def handleMonster(monster,window):
     monster.draw(window)
 
 def generateRandomMnst(assets):
-    newMonst = Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),random.randint(3,5),(64,64))
+    newMonst = Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),random.randint(3,5),(88,88))
     return newMonst
