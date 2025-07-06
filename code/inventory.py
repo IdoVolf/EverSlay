@@ -1,17 +1,11 @@
 import pygame
-from item import Item
+from item import Item ,equipables
 from reso import resource_path
 from menu import displayText 
 import random
 pygame.init()
 
-import pygame
-from item import Item
-from reso import resource_path
-from menu import displayText 
-import random
 
-pygame.init()
 
 def Inventory(window, player):
     bg = pygame.image.load(resource_path("assets/battle ui/bgs/inventory.png"))
@@ -58,6 +52,12 @@ def Inventory(window, player):
                             player.hp = player.maxHp
                         items[i] -= 1
                         if items[i] <= 0:
+                            del items[i]
+                            del player.lastUseTime[i]
+                    if(i in equipables):
+                        i.effectFunc(player,i.name)
+                        items[i] -=1
+                        if(items[i] <= 0):
                             del items[i]
                             del player.lastUseTime[i]
 

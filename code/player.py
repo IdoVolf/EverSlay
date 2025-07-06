@@ -2,7 +2,8 @@ import pygame
 from reso import resource_path
 pygame.init()
 
-weaponToDmg = {"stick":3,"rusty knife":7,"short bow":11,"quality dagger":18,"annoying dog?":1,"great Sword":30,"giant spoon":14}
+weaponToDmg = {"stick":3,"rusty knife":7,"poison dagger":11,"quality dagger":18,"annoying dog?":1,"great sword":30,"giant spoon":14,
+               "axe":22}
 armorToDefense = {"blue shirt":2,"baseball hat":3,"cupboard armor":6,"golden crown":12,"medival armor":15}
 
 slashAnim = [pygame.image.load(resource_path("assets/uniqe/slash1.png")),pygame.image.load(resource_path("assets/uniqe/slash2.png")),
@@ -13,7 +14,7 @@ slashAnim = [pygame.image.load(resource_path("assets/uniqe/slash1.png")),pygame.
 class Player:
     def __init__(self):
         self.hp = 50
-        self.weapon = "short bow"
+        self.weapon = "poison dagger"
         self.armor = "blue shirt"
         self.maxHp = 50
         self.monsterKilled = 0
