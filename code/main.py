@@ -1,10 +1,12 @@
 import pygame
 from reso import resource_path
-from mnst import Monster, loadMonsterAssets, handleMonster, generateRandomMnst, drawIndicator
+from mnst import Monster, loadMonsterAssets, handleMonster, generateRandomMnst, drawIndicator,treasures
 from bg import Background
 from btn import Button
 from menu import menu, displayText
 from player import Player
+from inventory import Inventory
+import random
 
 pygame.init()
 pygame.mixer.init()
@@ -96,6 +98,7 @@ while run:
                         slashPosCurrent = target 
                         slotStatus[target].getHit(player.getDmg())
                 elif btn.name == "item":
+                    gameState = Inventory(window,player)
                     turn = "monster"
                 elif btn.name == "exit":
                     gameState = "menu"
@@ -117,6 +120,12 @@ while run:
                 
                 # Check for death
                 if mns.hp < 1:
+                    trs = random.randint(0,len(treasures)-1)
+                    if(bool(random.getrandbits(1))):
+                        if(treasures[trs] in player.inventory):
+                            player.inventory[treasures[trs]] = player.inventory[treasures[trs]] +1
+                        else:
+                            player.inventory[treasures[trs]] = 1
                     slotStatus[i] = None
                     player.monsterKilled += 1
                     turn = "player"

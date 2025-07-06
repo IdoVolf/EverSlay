@@ -21,7 +21,7 @@ class Player:
         self.attackStart = 0
         self.attackDuration = 800
         self.gold = 0
-        self.inventory = []
+        self.inventory = {}
 
     def getHit(self,dmg):
         defense = armorToDefense[self.armor]
