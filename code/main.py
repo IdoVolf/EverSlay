@@ -1,11 +1,12 @@
 import pygame
 from reso import resource_path
-from mnst import Monster, loadMonsterAssets, handleMonster, generateRandomMnst, drawIndicator,treasures
+from mnst import Monster, loadMonsterAssets, handleMonster, generateRandomMnst, drawIndicator
 from bg import Background
 from btn import Button
 from menu import menu, displayText
 from player import Player
 from inventory import Inventory
+from item import treasures
 import random
 
 pygame.init()
@@ -99,7 +100,6 @@ while run:
                         slotStatus[target].getHit(player.getDmg())
                 elif btn.name == "item":
                     gameState = Inventory(window,player)
-                    turn = "monster"
                 elif btn.name == "exit":
                     gameState = "menu"
 

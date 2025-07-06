@@ -35,4 +35,6 @@ def menu(window):
         
 def displayText(window, text, pos, font, color=(255, 255, 255)):
     txt = font.render(text, True, color)
-    window.blit(txt, pos)
+    rect = txt.get_rect(topleft=pos)
+    window.blit(txt, rect)
+    return rect

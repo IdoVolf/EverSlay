@@ -91,7 +91,3 @@ def drawIndicator(window, pos, lastFrame, delay, frame):
     window.blit(pygame.transform.scale(indic[frame],(48,48)), pos)
     return lastFrame, frame
 
-gem = pygame.image.load(resource_path("assets/items/gem.png"))
-gem = Item("Gem","a rare stone worth - 50G",gem,None)
-
-treasures = [gem]
