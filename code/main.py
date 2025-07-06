@@ -24,6 +24,7 @@ monsters = []
 pygame.mouse.set_visible(False)
 player = Player()
 killPriority = False
+target =1
 
 myFont = pygame.font.Font(None, 24)
 bg = pygame.image.load(resource_path("assets/battle ui/battleBox.png"))
@@ -48,7 +49,7 @@ encounterNum = 3
 turnIndex = 0
 monsterSlots = [(260, 148), (50, 148), (450, 148)]  # slots: left(0), center(1), right(2)
 slotStatus = [None, None, None]  # holds Monsters or None
-
+slashPoss = [(50,176),(282, 176),(450,176)]
 while run:
     if gameState == "menu":
         gameState, run = menu(window)
@@ -78,7 +79,7 @@ while run:
                     slash.play()
                     player.isAttacking = True
                     player.attackStart = pygame.time.get_ticks()
-                    monsters[1].getHit(player.getDmg())  # always attack center monster
+                    monsters[target].getHit(player.getDmg())  # always attack center monster
                 if btn.name == "item":
                     turn = "monster"
                 if btn.name == "exit":
@@ -89,7 +90,8 @@ while run:
             displayText(window, f"{mns.hp}", (mns.pos[0] + 40, 120), myFont, (0, 0, 0))
             displayText(window, f"monster defense : {mns.defense}", (mns.pos[0], mns.pos[1] - 50), myFont, (0, 0, 0))
             displayText(window, f"monster attack : {mns.attack}", (mns.pos[0], mns.pos[1] - 70), myFont, (0, 0, 0))
-
+            if(mns.isClicked(mousePoS,mousePressed)):
+                target = monsters.index(mns)
             if mns.hp < 1:
                 deadIndex = slotStatus.index(mns)
                 slotStatus[deadIndex] = None
@@ -126,7 +128,7 @@ while run:
 
         # Player attack animation
         if player.isAttacking:
-            player.drawAnims(window)
+            player.drawAnims(window,slashPoss[target])
             if pygame.time.get_ticks() - player.attackStart >= player.attackDuration:
                 player.isAttacking = False
                 if not killPriority:
@@ -137,10 +139,10 @@ while run:
                     killPriority = False
 
         # HUD
-        displayText(window, f"Your health : {player.hp}/{player.maxHp} hp", (400, 300), myFont, (0, 0, 0))
-        displayText(window, f"Your weapon : {player.weapon} - {player.getDmg()} dmg", (400, 320), myFont, (0, 0, 0))
-        displayText(window, f"Your armor : {player.armor} - {player.getDefense()} def", (400, 340), myFont, (0, 0, 0))
-        displayText(window, f"Monsters killed : {player.monsterKilled}", (400, 360), myFont, (0, 0, 0))
-
+        displayText(window, f"Your health : {player.hp}/{player.maxHp} hp", (350, 300), myFont, (0, 0, 0))
+        displayText(window, f"Your weapon : {player.weapon} - {player.getDmg()} dmg", (350, 320), myFont, (0, 0, 0))
+        displayText(window, f"Your armor : {player.armor} - {player.getDefense()} def", (350, 340), myFont, (0, 0, 0))
+        displayText(window, f"Monsters killed : {player.monsterKilled}", (350, 360), myFont, (0, 0, 0))
+        displayText(window, f"Current target : {target+1}", (60, 50), myFont, (0, 0, 0))
         pygame.display.update()
         clock.tick(60)

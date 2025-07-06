@@ -34,6 +34,13 @@ class Monster:
         else:
             self.hp -=1
 
+    def isClicked(self,mousePos,mousePressed):
+        img = self.assets[self.currentFrame]    
+        img = pygame.transform.scale(img,self.scale)
+        rect = img.get_rect(topleft=self.pos)
+        return(rect.collidepoint(mousePos) and mousePressed[0])
+    
+
 
 def loadMonsterAssets(monsterFolderPath):
     allMonsters = []

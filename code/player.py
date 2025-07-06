@@ -33,13 +33,13 @@ class Player:
     def getDefense(self):
         return armorToDefense[self.armor]
     
-    def drawAnims(self,window):
+    def drawAnims(self,window,pos):
         if(self.isAttacking):
             now = pygame.time.get_ticks()
             if(now - self.attackStart < self.attackDuration):
                 frame  = (now - self.attackStart) // (self.attackDuration // 8)
                 img = slashAnim[int(frame)]
                 img = pygame.transform.scale(img,(72,72))
-                window.blit(img,(282, 176))
+                window.blit(img,pos)
             else:
                 self.isAttacking = False
