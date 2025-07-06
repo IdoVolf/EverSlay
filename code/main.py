@@ -72,7 +72,6 @@ while run:
         mousePressed = pygame.mouse.get_pressed()
 
         window.blit(bg, bg.get_rect())
-        window.blit(cursor, mousePoS)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -162,13 +161,10 @@ while run:
                     turn = "player"
                     killPriority = False
 
-        if(player.monsterKilled %5==0):
+        if(player.monsterKilled %5==0 and player.monsterKilled != 0):
             encounterNum = 3
-        else:
-            encounterNum =1
-        
-        if(player.monsterKilled %7==0):
-            encounterNum = 2
+        elif(player.monsterKilled % 4 ==0) and player.monsterKilled != 0:
+            encounterNum =2
         else:
             encounterNum =1
 
@@ -181,5 +177,6 @@ while run:
         displayText(window, f"Your weapon : {player.weapon} - {player.getDmg()} dmg", (350, 320), myFont, (0, 0, 0))
         displayText(window, f"Your armor : {player.armor} - {player.getDefense()} def", (350, 340), myFont, (0, 0, 0))
         displayText(window, f"Monsters killed : {player.monsterKilled}", (350, 360), myFont, (0, 0, 0))
+        window.blit(cursor, mousePoS)
         pygame.display.update()
         clock.tick(60)
