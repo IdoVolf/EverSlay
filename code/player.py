@@ -4,7 +4,7 @@ pygame.init()
 
 weaponToDmg = {"stick":3,"rusty knife":7,"poison dagger":11,"quality dagger":18,"annoying dog?":1,"great sword":30,"giant spoon":14,
                "axe":22}
-armorToDefense = {"blue shirt":2,"baseball hat":3,"cupboard armor":6,"golden crown":12,"medival armor":15}
+armorToDefense = {"blue shirt":2,"baseball hat":3,"cupboard armor":6,"crown":12,"medival armor":15}
 
 slashAnim = [pygame.image.load(resource_path("assets/uniqe/slash1.png")),pygame.image.load(resource_path("assets/uniqe/slash2.png")),
              pygame.image.load(resource_path("assets/uniqe/slash3.png")),pygame.image.load(resource_path("assets/uniqe/slash4.png")),
