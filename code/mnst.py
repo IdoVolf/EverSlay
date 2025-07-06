@@ -59,5 +59,5 @@ def handleMonster(monster,window):
     monster.draw(window)
 
 def generateRandomMnst(assets):
-    newMonst = Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),random.randint(3,5),(48,48))
+    newMonst = Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),random.randint(3,5),(64,64))
     return newMonst

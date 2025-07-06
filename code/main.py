@@ -81,7 +81,7 @@ while run:
                 turn = "monster"
 
         displayText(window,f"Your health : {player.hp}/{player.maxHp} hp",(400,300),myFont,(0,0,0))
-        displayText(window,f"{monsters[0].hp}",(320,128),myFont,(0,0,0))
+        displayText(window,f"{monsters[0].hp}",(320,108),myFont,(0,0,0))
         displayText(window,f"monster defense : {monsters[0].defense}",(70,70),myFont,(0,0,0))
         displayText(window,f"monster attack : {monsters[0].attack}",(70,90),myFont,(0,0,0))
         displayText(window,f"Your weapon : {player.weapon} - {player.getDmg()} dmg",(400,320),myFont,(0,0,0))
