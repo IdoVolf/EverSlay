@@ -25,6 +25,8 @@ axeI = pygame.image.load(resource_path("assets/items/axe.png"))
 stickI = pygame.image.load(resource_path("assets/items/stick.png"))
 crownI = pygame.image.load(resource_path("assets/items/crown.png"))
 trashI = pygame.image.load(resource_path("assets/items/trash1.png"))
+scytheI = pygame.image.load(resource_path("assets/items/scythe.png"))
+chestplateI = pygame.image.load(resource_path("assets/items/chestplate.png"))
 
 gem = Item("Gem","a rare stone worth - 50G",gemI,None)
 healthPoition = Item("Health Potion","A poition that heals..",healthI,heal)
@@ -32,6 +34,8 @@ trash1 = Item("trash","ewww stop toouching it gross",trashI,None)
 axe = Item("axe","an axe used for cutting.. monsters(?)",axeI,changeWeapon)
 stick = Item("stick","a small stick",stickI,changeWeapon)
 crown = Item("crown","a golden crown!",crownI,changeArmor)
+scythe = Item("scythe","an ugly looking scythe",scytheI,changeWeapon)
+chestplate = Item("chestplate","a shiny mettalic chestplate",chestplateI,changeArmor)
 
-treasures = [gem,healthPoition,axe,stick,crown,trash1,trash1]
-equipables = [axe,stick,crown]
+treasures = [gem,healthPoition,axe,stick,crown,trash1,trash1,scythe,chestplate]
+equipables = [axe,stick,crown,scythe,chestplate]
