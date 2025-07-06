@@ -41,7 +41,8 @@ item = Button((218,320),(40,40),pygame.image.load(resource_path("assets/btns/ite
 btns = [fight,item,exit]
 slash = pygame.mixer.Sound(resource_path("assets/sound/slash.mp3"))
 bite = pygame.mixer.Sound(resource_path("assets/sound/monster-bite.mp3"))
-encounterNum =1
+encounterNum =3
+turnIndex = 0
 while run:
     if(gameState == "menu"):
         gameState,run = menu(window)
@@ -71,8 +72,10 @@ while run:
                 if(btn.name == "exit"):
                     gameState = "menu"
                     
-
         for mns in monsters:
+            displayText(window,f"{mns.hp}",(mns.pos[0]+40,120),myFont,(0,0,0))
+            displayText(window,f"monster defense : {mns.defense}",(mns.pos[0],mns.pos[1]-50),myFont,(0,0,0))
+            displayText(window,f"monster attack : {mns.attack}",(mns.pos[0],mns.pos[1]-70),myFont,(0,0,0))
             if(mns.hp < 1):
                 monsters.remove(mns)
                 player.monsterKilled +=1
@@ -81,11 +84,15 @@ while run:
                 break
             handleMonster(mns,window)
             if(turn == "monster" and now - lastTurnTime > enemyActDelay):
-                lastTurnTime =now
-                bite.play()
-                player.getHit(mns.attack)
-                if(mns == monsters[-1]):
+                if(turnIndex < len(monsters)):
+                    lastTurnTime =now
+                    bite.play()
+                    player.getHit(monsters[turnIndex].attack)
+                    turnIndex +=1
+                else:
+                    turnIndex = 0
                     turn = "player"
+            
 
         if(len(monsters) <encounterNum):
             newMonst = generateRandomMnst(mnsAssets)
@@ -94,7 +101,7 @@ while run:
         if(len(monsters) > 1):
             monsters[1].pos = (50,148)
         if(len(monsters) >2):
-            monsters[2].pos = (470,148)
+            monsters[2].pos = (450,148)
 
 
 
@@ -111,9 +118,6 @@ while run:
 
 
         displayText(window,f"Your health : {player.hp}/{player.maxHp} hp",(400,300),myFont,(0,0,0))
-        displayText(window,f"{monsters[0].hp}",(312,108),myFont,(0,0,0))
-        displayText(window,f"monster defense : {monsters[0].defense}",(70,70),myFont,(0,0,0))
-        displayText(window,f"monster attack : {monsters[0].attack}",(70,90),myFont,(0,0,0))
         displayText(window,f"Your weapon : {player.weapon} - {player.getDmg()} dmg",(400,320),myFont,(0,0,0))
         displayText(window,f"Your armor : {player.armor} - {player.getDefense()} def",(400,340),myFont,(0,0,0))
         displayText(window,f"Monsters killed : {player.monsterKilled}",(400,360),myFont,(0,0,0))

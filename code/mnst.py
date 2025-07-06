@@ -4,7 +4,7 @@ import random
 pygame.init()
 
 class Monster:
-    def __init__(self,assets,hp,attack,defense,scale,pos= (276,148)):
+    def __init__(self,assets,hp,attack,defense,scale,pos= (260,148)):
         self.assets = assets # a list of pygame images not file paths! (planing to laod the images when game start )
         self.hp =hp
         self.attack = attack
