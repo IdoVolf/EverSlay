@@ -7,8 +7,8 @@ class Item:
         self.icon = icon  # Load an image or None
         self.effectFunc = effectFunc  # Function to call when used
 
-gem = pygame.image.load(resource_path("assets/items/gem.png"))
-health = pygame.image.load(resource_path("assets/items/healthP.png"))
-gem = Item("Gem","a rare stone worth - 50G",gem,None)
-healthPoition = Item("Health Potion","A poition that heals..",health,None)
+gemI = pygame.image.load(resource_path("assets/items/gem.png"))
+healthI = pygame.image.load(resource_path("assets/items/healthP.png"))
+gem = Item("Gem","a rare stone worth - 50G",gemI,None)
+healthPoition = Item("Health Potion","A poition that heals..",healthI,None)
 treasures = [gem,healthPoition]

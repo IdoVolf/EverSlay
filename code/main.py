@@ -121,7 +121,7 @@ while run:
                 # Check for death
                 if mns.hp < 1:
                     trs = random.randint(0,len(treasures)-1)
-                    if(bool(random.getrandbits(1))):
+                    if(bool(random.getrandbits(1)) and len(player.inventory) < 6):
                         if(treasures[trs] in player.inventory):
                             player.inventory[treasures[trs]] = player.inventory[treasures[trs]] +1
                         else:
