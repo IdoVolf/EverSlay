@@ -11,6 +11,7 @@ from menu import displayText
 from player import Player
 
 pygame.init()
+pygame.mixer.init()
 
 #stting vars
 winSize = (640,380)
@@ -38,6 +39,8 @@ exit = Button((20,320),(40,40),pygame.image.load(resource_path("assets/btns/exit
 fight = Button((118,320),(40,40),pygame.image.load(resource_path("assets/btns/fightBtn1.png")),pygame.image.load(resource_path("assets/btns/fightBtn2.png")),"fight")
 item = Button((218,320),(40,40),pygame.image.load(resource_path("assets/btns/itemtBtn1.png")),pygame.image.load(resource_path("assets/btns/itemtBtn2.png")),"item")
 btns = [fight,item,exit]
+slash = pygame.mixer.Sound(resource_path("assets/sound/slash.mp3"))
+bite = pygame.mixer.Sound(resource_path("assets/sound/monster-bite.mp3"))
 while run:
     if(gameState == "menu"):
         gameState,run = menu(window)
@@ -63,6 +66,7 @@ while run:
             handleMonster(mns,window)
             if(turn == "monster" and now - lastTurnTime > enemyActDelay):
                 lastTurnTime =now
+                bite.play()
                 player.getHit(mns.attack)
                 turn = "player"
 
@@ -73,17 +77,29 @@ while run:
 
         for btn in btns:
             btn.draw(window,mousePoS)
-            if(btn.isClicked(mousePoS,mousePressed) and turn == "player"):
+            if(btn.isClicked(mousePoS,mousePressed) and turn == "player" and not player.isAttacking):
                 if(btn.name == "fight"):
+                    slash.play()
+                    player.isAttacking = True
+                    player.attackStart = pygame.time.get_ticks()
                     monsters[0].getHit(player.getDmg())
                 if(btn.name == "item"):
-                    pass
+                    turn = "monster"
                 if(btn.name == "exit"):
                     gameState = "menu"
-                    doorEx = False
-                if(doorEx):
-                 lastTurnTime = pygame.time.get_ticks()
-                 turn = "monster"
+                    
+
+
+
+        if player.isAttacking:
+           player.drawAnims(window)
+           if pygame.time.get_ticks() - player.attackStart >= player.attackDuration:
+            player.isAttacking = False
+            turn = "monster"
+            lastTurnTime = pygame.time.get_ticks()
+
+
+
 
         displayText(window,f"Your health : {player.hp}/{player.maxHp} hp",(400,300),myFont,(0,0,0))
         displayText(window,f"{monsters[0].hp}",(312,108),myFont,(0,0,0))
