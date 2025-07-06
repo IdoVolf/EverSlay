@@ -59,7 +59,7 @@ monsterSlots = [(260, 148), (50, 148), (450, 148)]  # left(0), center(1), right(
 slotStatus = [None, None, None]  # holds Monsters or None
 
 slashPoss = [(260,176), (50,176), (450,176)]  # match slot indices order for slash pos
-indicPoses = [(260,30), (50,30), (450,30)]    # same here for indicator
+indicPoses = [(280,30), (70,30), (470,30)]    # same here for indicator
 
 while run:
     if gameState == "menu":

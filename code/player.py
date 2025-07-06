@@ -20,7 +20,9 @@ class Player:
         self.isAttacking = False
         self.attackStart = 0
         self.attackDuration = 800
-        
+        self.gold = 0
+        self.inventory = []
+
     def getHit(self,dmg):
         defense = armorToDefense[self.armor]
         if(defense < dmg):
