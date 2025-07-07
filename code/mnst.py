@@ -68,9 +68,14 @@ def handleMonster(monster,window):
     monster.draw(window)
 
 def generateRandomMnst(assets):
-    newMonst = Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),random.randint(3,5),(88,88))
-    return newMonst
+    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),random.randint(3,5),(88,88))
+    
 
+def generateMedMnst(assets):
+    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(15,30),random.randint(10,15),random.randint(6,12),(88,88))
+
+def generateHardMnst(assets):
+    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(35,55),random.randint(17,25),random.randint(15,20),(88,88))
 
 indic = [pygame.image.load(resource_path("assets/uniqe/indicator/indicator1.png")),
          pygame.image.load(resource_path("assets/uniqe/indicator/indicator2.png")),

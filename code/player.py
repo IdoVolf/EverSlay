@@ -42,7 +42,7 @@ class Player:
             if(now - self.attackStart < self.attackDuration):
                 frame  = (now - self.attackStart) // (self.attackDuration // 8)
                 img = slashAnim[int(frame)]
-                img = pygame.transform.scale(img,(72,72))
+                img = pygame.transform.scale(img,(88,88))
                 window.blit(img,pos)
             else:
                 self.isAttacking = False

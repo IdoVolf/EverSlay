@@ -1,6 +1,6 @@
 import pygame
 from reso import resource_path
-from mnst import Monster, loadMonsterAssets, handleMonster, generateRandomMnst, drawIndicator
+from mnst import Monster, loadMonsterAssets, handleMonster, generateRandomMnst,generateMedMnst,generateHardMnst,drawIndicator
 from bg import Background
 from btn import Button
 from menu import menu, displayText
@@ -53,6 +53,8 @@ btns = [fight, item, exit]
 
 slash = pygame.mixer.Sound(resource_path("assets/sound/slash.mp3"))
 bite = pygame.mixer.Sound(resource_path("assets/sound/monster-bite.mp3"))
+treasureSe = pygame.mixer.Sound(resource_path("assets/sound/arcade-ui-14-229514.mp3"))
+die = pygame.mixer.Sound(resource_path("assets/sound/pick-92276.mp3"))
 
 encounterNum = 1
 turnIndex = 0
@@ -63,6 +65,9 @@ slotStatus = [None, None, None]  # holds Monsters or None
 
 slashPoss = [(260,176), (50,176), (450,176)]  # match slot indices order for slash pos
 indicPoses = [(280,30), (70,30), (470,30)]    # same here for indicator
+scale = 0
+hardScale = 0
+newKill = True
 
 while run:
     if gameState == "menu":
@@ -120,8 +125,12 @@ while run:
                 
                 # Check for death
                 if mns.hp < 1:
+                    die.play()
+                    if(not newKill):
+                        newKill = True
                     trs = random.randint(0,len(treasures)-1)
-                    if(bool(random.getrandbits(1)) and len(player.inventory) < 7):
+                    if(bool(random.getrandbits(1)) and len(player.inventory) < 7): 
+                        treasureSe.play()
                         if(treasures[trs] in player.inventory):
                             player.inventory[treasures[trs]] = player.inventory[treasures[trs]] +1
                         else:
@@ -156,7 +165,15 @@ while run:
         # Spawn monsters in empty slots
         for i in range(len(slotStatus)):
             if slotStatus[i] is None and len(monsters) < encounterNum:
-                newMonst = generateRandomMnst(mnsAssets)
+                isMed = random.randint(scale,10)
+                isHard = random.randint(hardScale,20)
+                if(isMed == 10):
+                    newMonst = generateMedMnst(mnsAssets)
+                elif(isHard == 20):
+                    newMonst = generateHardMnst(mnsAssets)
+                else:
+                    newMonst = generateRandomMnst(mnsAssets)
+
                 newMonst.pos = monsterSlots[i]
                 slotStatus[i] = newMonst
                 break
@@ -201,6 +218,11 @@ while run:
                 encounterNum = 1
         else:
             encounterNum = 1
+        
+        if(player.monsterKilled % 10 == 0 and player.monsterKilled != 0 and newKill and scale < 7 and hardScale < 10):
+            hardScale +=1
+            scale +=1
+            newKill = False
 
         # Draw indicator on targeted slot (only if that slot is alive)
         if slotStatus[target] is not None:
