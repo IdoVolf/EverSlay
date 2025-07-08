@@ -62,6 +62,12 @@ def Inventory(window, player):
                         if items[i] <= 0:
                             del items[i]
                             del player.lastUseTime[i]
+                    elif i.name == "Gem":
+                        i.effectFunc(player,50)
+                        items[i] -=1
+                        if(items[i] <=0):
+                            del items[i]
+                            del player.lastUseTime[i]
                     elif i in equipables:
                         i.effectFunc(player, i.name)
                         items[i] -= 1

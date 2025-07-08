@@ -2,9 +2,9 @@ import pygame
 from reso import resource_path
 pygame.init()
 
-weaponToDmg = {"stick":3,"scythe":7,"poison dagger":11,"quality dagger":18,"annoying dog?":1,"great sword":30,"giant spoon":14,
+weaponToDmg = {"stick":3,"scythe":7,"dagger":16,"annoying dog?":1,"great sword":30,"giant spoon":14,
                "axe":22}
-armorToDefense = {"blue shirt":0.1,"baseball hat":0.2,"cupboard armor":0.3,"crown":0.45,"chestplate":0.55}
+armorToDefense = {"blue shirt":0.1,"baseball hat":0.2,"cupboard":0.3,"crown":0.45,"chestplate":0.55}
 
 slashAnim = [pygame.image.load(resource_path("assets/uniqe/slash1.png")),pygame.image.load(resource_path("assets/uniqe/slash2.png")),
              pygame.image.load(resource_path("assets/uniqe/slash3.png")),pygame.image.load(resource_path("assets/uniqe/slash4.png")),
@@ -21,7 +21,7 @@ class Player:
         self.isAttacking = False
         self.attackStart = 0
         self.attackDuration = 800
-        self.gold = 0
+        self.gold = 100
         self.inventory = {}
 
     def getHit(self,dmg):

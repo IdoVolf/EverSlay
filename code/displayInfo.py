@@ -8,6 +8,7 @@ def displayPlayerInfo(window,player):
         displayText(window, f"Your weapon : {player.weapon} - {player.getDmg()} dmg", (350, 320), myFont, (0, 0, 0))
         displayText(window, f"Your armor : {player.armor} - {player.getDefense() *100:.0f}% def", (350, 340), myFont, (0, 0, 0))
         displayText(window, f"Monsters killed : {player.monsterKilled}", (350, 360), myFont, (0, 0, 0))
+        displayText(window, f"gold : {player.gold}", (525, 360), myFont, (0, 0, 0))
 
 def displayMonsterInfo(window,mns):
     displayText(window, f"health - {mns.hp}", (mns.pos[0] , 120), myFont, (0, 0, 0))

@@ -8,6 +8,7 @@ from player import Player
 from inventory import Inventory
 from item import treasures
 import random
+from shop import Shop
 from displayInfo import displayPlayerInfo ,displayMonsterInfo
 pygame.init()
 pygame.mixer.init()
@@ -48,7 +49,10 @@ fight = Button((118, 320), (40, 40),
 item = Button((218, 320), (40, 40),
               pygame.image.load(resource_path("assets/btns/itemtBtn1.png")),
               pygame.image.load(resource_path("assets/btns/itemtBtn2.png")), "item")
-btns = [fight, item, exit]
+shop = Button((270,320),(40,40),
+              pygame.image.load(resource_path("assets/btns/shopBtn1.png")),
+              pygame.image.load(resource_path("assets/btns/shopBtn2.png")),"shop")
+btns = [fight, item, exit,shop]
 
 slash = pygame.mixer.Sound(resource_path("assets/sound/slash.mp3"))
 bite = pygame.mixer.Sound(resource_path("assets/sound/monster-bite.mp3"))
@@ -103,6 +107,8 @@ while run:
                     gameState = Inventory(window,player)
                 elif btn.name == "exit":
                     gameState = "menu"
+                elif btn.name == "shop":
+                    gameState = Shop(window,player)
 
         # Display monsters and update
         monsters = []  # We'll rebuild this list for convenience (not used for indexing target!)
@@ -130,8 +136,7 @@ while run:
                     player.monsterKilled += 1
                     turn = "player"
                     killPriority = True
-                    
-                    # Adjust target if current slot is dead
+            
                     if slotStatus[target] is None:
                         # Pick first alive slot or fallback to 0
                         for j in range(3):
@@ -143,29 +148,19 @@ while run:
                     break
 
         # Monster attack turn logic
-
-
         # Spawn monsters in empty slots
         slotStatus, monsters = spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlots)
-
         # Player attack animation
         turn,lastTurnTime,killPriority = player.slashAnim(window,slashPoss,slashPosCurrent,lastTurnTime,turn,killPriority)
-
         # Adjust encounter number by monsters killed
         encounterNum = encounterScale(player.monsterKilled)
-        
         #diff scale
         hardScale,scale,newKill = scaleDiff(player.monsterKilled,scale,hardScale,newKill)
         turn, lastTurnTime, turnIndex, player = monsterAttack(turn, now, lastTurnTime, turnIndex, monsters, bite, player)
-
-        
-
         # Draw indicator on targeted slot (only if that slot is alive)
         if slotStatus[target] is not None:
             lastFrame, frame = drawIndicator(window, indicPoses[target], lastFrame, delay, frame)
-
         displayPlayerInfo(window,player)
-
         window.blit(cursor, mousePoS)
         pygame.display.update()
         clock.tick(60)
