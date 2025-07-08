@@ -62,14 +62,13 @@ turnIndex = 0
 # Fixed slots for monsters, always the "source of truth"
 monsterSlots = [(260, 148), (50, 148), (450, 148)]  # left(0), center(1), right(2)
 slotStatus = [None, None, None]  # holds Monsters or None
-diedBefore = False
+
 slashPoss = [(260,176), (50,176), (450,176)]  # match slot indices order for slash pos
 indicPoses = [(280,30), (70,30), (470,30)]    # same here for indicator
 scale = 0
 hardScale = 0
 newKill = True
-pTurn = "player"
-filfthyCheater = False
+
 while run:
     if gameState == "menu":
         gameState, run = menu(window)
@@ -81,8 +80,7 @@ while run:
         killPriority = False
         turnIndex = 0
         target = 1  # always start targeting center slot
-        pTurn = "player"
-        filfthyCheater = False
+
     elif gameState == "game":
         now = pygame.time.get_ticks()
         mousePoS = pygame.mouse.get_pos()
@@ -108,14 +106,7 @@ while run:
                 elif btn.name == "item":
                     gameState = Inventory(window,player)
                 elif btn.name == "exit":
-                    if(player.monsterKilled > 0):
-                        filfthyCheater =True
-                        turn = "monster"
-                        pTurn = "monster"
-                        diedBefore =True
-                    else:
-                        gameState = "menu"
-                        run = False
+                    gameState = "menu"
 
         # Display monsters and update
         monsters = []  # We'll rebuild this list for convenience (not used for indexing target!)
@@ -164,17 +155,12 @@ while run:
         if turn == "monster" and now - lastTurnTime > enemyActDelay:
             if turnIndex < len(monsters):
                 lastTurnTime = now
-                if(player.monsterKilled != 0 or  diedBefore):
-                    bite.play()
-                    player.getHit(monsters[turnIndex].attack)
+                bite.play()
+                player.getHit(monsters[turnIndex].attack)
                 turnIndex += 1
             else:
                 turnIndex = 0
-                turn = pTurn
-
-        if(player.hp < 1):
-            diedBefore =True
-            gameState = "menu"
+                turn = "player"
 
         # Spawn monsters in empty slots
         for i in range(len(slotStatus)):
@@ -246,15 +232,7 @@ while run:
         displayText(window, f"Your weapon : {player.weapon} - {player.getDmg()} dmg", (350, 320), myFont, (0, 0, 0))
         displayText(window, f"Your armor : {player.armor} - {player.getDefense() *100:.0f}% def", (350, 340), myFont, (0, 0, 0))
         displayText(window, f"Monsters killed : {player.monsterKilled}", (350, 360), myFont, (0, 0, 0))
-        if(filfthyCheater):
-            displayText(window,f"you cant run away killer",(50,50),myFont,(0,0,0))
-        if(player.monsterKilled == 0 and not diedBefore):
-            displayText(window,f"pls leave human",(50,50),myFont,(0,0,0))
-            displayText(window,f"we dont want to fight you",(50,70),myFont,(0,0,0))
-        elif(player.monsterKilled == 0):
-            displayText(window,f"huh you are alive?",(50,50),myFont,(0,0,0))
-            displayText(window,f"and chose to come back?",(50,70),myFont,(0,0,0))
-            displayText(window,f"your death i guess",(50,90),myFont,(0,0,0))
+
         window.blit(cursor, mousePoS)
         pygame.display.update()
         clock.tick(60)
