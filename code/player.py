@@ -33,7 +33,7 @@ class Player:
         return weaponToDmg[self.weapon]
     
     def getDefense(self):
-        return armorToDefense[self.armor]
+        return round(armorToDefense[self.armor],2)
     
     def drawAnims(self,window,pos):
         if(self.isAttacking):

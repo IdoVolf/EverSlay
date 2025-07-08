@@ -73,14 +73,14 @@ monsterMedDefs = [0.2,0.25,0.3,0.35]
 monsterHardDefs = [0.3,0.35,0.4,0.45,0.5,0.55]
 
 def generateRandomMnst(assets):
-    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),random.choice(monstereastDefs),(88,88))
+    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),round(random.choice(monstereastDefs),2),(88,88))
     
 
 def generateMedMnst(assets):
-    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(15,30),random.randint(10,15),random.choice(monsterMedDefs),(88,88))
+    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(15,30),random.randint(10,15),round(random.choice(monsterMedDefs),2),(88,88))
 
 def generateHardMnst(assets):
-    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(35,55),random.randint(17,25),random.choice(monsterHardDefs),(88,88))
+    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(35,55),random.randint(17,25),round(random.choice(monsterHardDefs),2),(88,88))
 
 indic = [pygame.image.load(resource_path("assets/uniqe/indicator/indicator1.png")),
          pygame.image.load(resource_path("assets/uniqe/indicator/indicator2.png")),

@@ -114,7 +114,7 @@ while run:
             if mns is not None:
                 monsters.append(mns)
                 displayText(window, f"health - {mns.hp}", (mns.pos[0] , 120), myFont, (0, 0, 0))
-                displayText(window, f"defense - {mns.defense*100}%", (mns.pos[0], mns.pos[1] - 50), myFont, (0, 0, 0))
+                displayText(window, f"defense - {mns.defense*100:.0f}%", (mns.pos[0], mns.pos[1] - 50), myFont, (0, 0, 0))
                 displayText(window, f"attack - {mns.attack}", (mns.pos[0], mns.pos[1] - 70), myFont, (0, 0, 0))
                 
                 handleMonster(mns, window)
@@ -162,6 +162,9 @@ while run:
                 turnIndex = 0
                 turn = "player"
 
+        if(player.hp < 1):
+            gameState = "menu"
+            
         # Spawn monsters in empty slots
         for i in range(len(slotStatus)):
             if slotStatus[i] is None and len(monsters) < encounterNum:
@@ -230,7 +233,7 @@ while run:
 
         displayText(window, f"Your health : {player.hp}/{player.maxHp} hp", (350, 300), myFont, (0, 0, 0))
         displayText(window, f"Your weapon : {player.weapon} - {player.getDmg()} dmg", (350, 320), myFont, (0, 0, 0))
-        displayText(window, f"Your armor : {player.armor} - {player.getDefense() *100}% def", (350, 340), myFont, (0, 0, 0))
+        displayText(window, f"Your armor : {player.armor} - {player.getDefense() *100:.0f}% def", (350, 340), myFont, (0, 0, 0))
         displayText(window, f"Monsters killed : {player.monsterKilled}", (350, 360), myFont, (0, 0, 0))
 
         window.blit(cursor, mousePoS)
