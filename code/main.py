@@ -6,7 +6,7 @@ from btn import Button
 from menu import menu, displayText
 from player import Player
 from inventory import Inventory
-from item import treasures
+from item import treasures ,rare
 import random
 from shop import Shop
 from displayInfo import displayPlayerInfo ,displayMonsterInfo
@@ -71,6 +71,7 @@ indicPoses = [(280,30), (70,30), (470,30)]    # same here for indicator
 scale = 0
 hardScale = 0
 newKill = True
+rareN = random.randint(0,len(rare))
 
 while run:
     if gameState == "menu":
@@ -108,7 +109,7 @@ while run:
                 elif btn.name == "exit":
                     gameState = "menu"
                 elif btn.name == "shop":
-                    gameState = Shop(window,player)
+                    gameState = Shop(window,player,rareN)
 
         # Display monsters and update
         monsters = []  # We'll rebuild this list for convenience (not used for indexing target!)
@@ -126,7 +127,7 @@ while run:
                     if(not newKill):
                         newKill = True
                     trs = random.randint(0,len(treasures)-1)
-                    if(bool(random.getrandbits(1)) and len(player.inventory) < 7): 
+                    if(bool(random.choice([0,0,1]) ==1) and len(player.inventory) < 7): 
                         treasureSe.play()
                         if(treasures[trs] in player.inventory):
                             player.inventory[treasures[trs]] = player.inventory[treasures[trs]] +1
@@ -155,7 +156,7 @@ while run:
         # Adjust encounter number by monsters killed
         encounterNum = encounterScale(player.monsterKilled)
         #diff scale
-        hardScale,scale,newKill = scaleDiff(player.monsterKilled,scale,hardScale,newKill)
+        hardScale,scale,newKill,rareN = scaleDiff(player.monsterKilled,scale,hardScale,newKill,rare,rareN)
         turn, lastTurnTime, turnIndex, player = monsterAttack(turn, now, lastTurnTime, turnIndex, monsters, bite, player)
         # Draw indicator on targeted slot (only if that slot is alive)
         if slotStatus[target] is not None:

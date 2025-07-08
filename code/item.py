@@ -44,6 +44,7 @@ chestplate = Item("chestplate","a shiny mettalic chestplate",chestplateI,changeA
 cupboard = Item("cupboard","an armor made out of cupboard",cupboardI,changeArmor)
 dagger = Item("dagger","a dagger...",daggerI,changeWeapon)
 
-treasures = [gem,gem,gem,healthPoition,axe,stick,crown,trash1,trash1,scythe,chestplate,cupboard,dagger]
+treasures = [gem,gem,gem,healthPoition,stick,crown,trash1,trash1,scythe,cupboard,dagger]
 equipables = [axe,stick,crown,scythe,chestplate,cupboard,dagger]
 regularShop = [healthPoition,crown,dagger]
+rare = [axe,chestplate]
