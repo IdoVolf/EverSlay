@@ -45,3 +45,30 @@ class Player:
                 window.blit(img,pos)
             else:
                 self.isAttacking = False
+
+    def attackMonster(self, slotStatus, target, slash):
+        if slotStatus[target] is not None:
+            slash.play()
+            self.isAttacking = True
+            self.attackStart = pygame.time.get_ticks()
+            slotStatus[target].getHit(self.getDmg())
+            return target
+        return None
+
+    def die(self):
+        if(self.hp < 1):
+            return "menu"
+        return "game"
+    
+    def slashAnim(self,window,slashPoss,slashPosCurrent,lastTurnTime,turn,killPriority):
+        if self.isAttacking:
+            self.drawAnims(window, slashPoss[slashPosCurrent])
+            if pygame.time.get_ticks() - self.attackStart >= self.attackDuration:
+                self.isAttacking = False
+                if not killPriority:
+                    turn = "monster"
+                    lastTurnTime = pygame.time.get_ticks()
+                else:
+                    turn = "player"
+                    killPriority = False
+        return turn,lastTurnTime,killPriority

@@ -16,6 +16,7 @@ class Monster:
         self.animDelay = 100
         self.lastFrame = 0
         self.scale = scale
+        self.actDelay = 1000
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -34,7 +35,6 @@ class Monster:
         reduced = int(dmg * self.defense)
         dmg -= reduced
         self.hp -= dmg
-
         
 
     def isClicked(self,mousePos,mousePressed):
@@ -101,3 +101,66 @@ def drawIndicator(window, pos, lastFrame, delay, frame):
     window.blit(pygame.transform.scale(indic[frame],(48,48)), pos)
     return lastFrame, frame
 
+def scaleDiff(playerMonsteredKilled,scale,hardScale,newKill):
+        if(playerMonsteredKilled % 10 == 0 and playerMonsteredKilled != 0 and newKill and scale < 7 and hardScale < 10):
+            hardScale +=1
+            scale +=1
+            newKill = False 
+        return hardScale,scale,newKill
+
+def encounterScale(mnsKilled):
+    if mnsKilled != 0:
+        if mnsKilled % 5 == 0:
+                return 3
+        elif mnsKilled % 4 == 0:
+                return  2
+        else:
+                return 1
+    return 1
+
+def spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlots):
+    # Spawn monsters
+    for i in range(len(slotStatus)):
+        if slotStatus[i] is None and sum(1 for m in slotStatus if m is not None) < encounterNum:
+            isMed = random.randint(scale, 10)
+            isHard = random.randint(hardScale, 20)
+
+            if isMed == 10:
+                newMonst = generateMedMnst(mnsAssets)
+            elif isHard == 20:
+                newMonst = generateHardMnst(mnsAssets)
+            else:
+                newMonst = generateRandomMnst(mnsAssets)
+
+            newMonst.pos = monsterSlots[i]
+            slotStatus[i] = newMonst
+            break
+
+    # Fix overlapping / positions
+    alive_slots = [i for i, m in enumerate(slotStatus) if m is not None]
+
+    if len(alive_slots) == 1:
+        i = alive_slots[0]
+        if slotStatus[i].pos[0] != monsterSlots[i][0]:
+            slotStatus[i].pos = monsterSlots[i]
+
+    elif len(alive_slots) == 2:
+        first, second = alive_slots
+        if slotStatus[first].pos == slotStatus[second].pos:
+            slotStatus[second].pos = monsterSlots[second]
+
+    # Rebuild monsters list
+    monsters = [m for m in slotStatus if m is not None]
+    return slotStatus, monsters
+
+def monsterAttack(turn, now, lastTurnTime, turnIndex, monsters, bite, player):
+    if turn == "monster" and now - lastTurnTime > monsters[0].actDelay:
+        if turnIndex < len(monsters):
+            lastTurnTime = now
+            bite.play()
+            player.getHit(monsters[turnIndex].attack)
+            turnIndex += 1
+        else:
+            turnIndex = 0
+            turn = "player"
+    return turn, lastTurnTime, turnIndex, player
