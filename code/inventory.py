@@ -46,7 +46,7 @@ def Inventory(window, player):
         for i in list(items.keys()):
             j = items[i]
             rect = displayText(window, f"{i.name} - {j}x", (50, 50 * count), myFont)
-            window.blit(pygame.transform.scale(i.icon, (32, 32)), (200, 50 * count))
+            window.blit(pygame.transform.scale(i.icon, (48, 48)), (200, (50 * count)-10))
 
             if i not in player.lastUseTime:
                 player.lastUseTime[i] = 0
