@@ -113,9 +113,9 @@ while run:
         for i, mns in enumerate(slotStatus):
             if mns is not None:
                 monsters.append(mns)
-                displayText(window, f"{mns.hp}", (mns.pos[0] + 40, 120), myFont, (0, 0, 0))
-                displayText(window, f"monster defense : {mns.defense}", (mns.pos[0], mns.pos[1] - 50), myFont, (0, 0, 0))
-                displayText(window, f"monster attack : {mns.attack}", (mns.pos[0], mns.pos[1] - 70), myFont, (0, 0, 0))
+                displayText(window, f"health - {mns.hp}", (mns.pos[0] , 120), myFont, (0, 0, 0))
+                displayText(window, f"defense - {mns.defense*100}%", (mns.pos[0], mns.pos[1] - 50), myFont, (0, 0, 0))
+                displayText(window, f"attack - {mns.attack}", (mns.pos[0], mns.pos[1] - 70), myFont, (0, 0, 0))
                 
                 handleMonster(mns, window)
 
@@ -230,7 +230,7 @@ while run:
 
         displayText(window, f"Your health : {player.hp}/{player.maxHp} hp", (350, 300), myFont, (0, 0, 0))
         displayText(window, f"Your weapon : {player.weapon} - {player.getDmg()} dmg", (350, 320), myFont, (0, 0, 0))
-        displayText(window, f"Your armor : {player.armor} - {player.getDefense()} def", (350, 340), myFont, (0, 0, 0))
+        displayText(window, f"Your armor : {player.armor} - {player.getDefense() *100}% def", (350, 340), myFont, (0, 0, 0))
         displayText(window, f"Monsters killed : {player.monsterKilled}", (350, 360), myFont, (0, 0, 0))
 
         window.blit(cursor, mousePoS)

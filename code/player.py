@@ -4,7 +4,7 @@ pygame.init()
 
 weaponToDmg = {"stick":3,"scythe":7,"poison dagger":11,"quality dagger":18,"annoying dog?":1,"great sword":30,"giant spoon":14,
                "axe":22}
-armorToDefense = {"blue shirt":2,"baseball hat":4,"cupboard armor":6,"crown":8,"chestplate":10}
+armorToDefense = {"blue shirt":0.1,"baseball hat":0.2,"cupboard armor":0.3,"crown":0.45,"chestplate":0.55}
 
 slashAnim = [pygame.image.load(resource_path("assets/uniqe/slash1.png")),pygame.image.load(resource_path("assets/uniqe/slash2.png")),
              pygame.image.load(resource_path("assets/uniqe/slash3.png")),pygame.image.load(resource_path("assets/uniqe/slash4.png")),
@@ -26,9 +26,8 @@ class Player:
 
     def getHit(self,dmg):
         defense = armorToDefense[self.armor]
-        if(defense < dmg):
-            self.hp -= (dmg - defense)
-        return
+        dmg -= int(dmg * defense)
+        self.hp -= dmg
     
     def getDmg(self):
         return weaponToDmg[self.weapon]
