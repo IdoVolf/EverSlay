@@ -4,15 +4,7 @@ from reso import resource_path
 from menu import displayText 
 import random
 pygame.init()
-
-
-
-import pygame
-from item import Item, equipables
-from reso import resource_path
-from menu import displayText 
-import random
-pygame.init()
+pygame.mixer.init()
 
 def Inventory(window, player):
     bg = pygame.image.load(resource_path("assets/battle ui/bgs/inventory.png"))
@@ -20,6 +12,7 @@ def Inventory(window, player):
     clock = pygame.time.Clock()
     myFont = pygame.font.Font(None, 24)
     cursor = pygame.image.load(resource_path("assets/cursors/crs1.png"))
+    drink = pygame.mixer.Sound(resource_path("assets/sound/drinking-coffe-107121.mp3"))
 
     delay = 5000  # 5 seconds per item
     if not hasattr(player, "lastUseTime"):
@@ -57,6 +50,7 @@ def Inventory(window, player):
                 if rightPressed and not prevRightPressed and now - player.lastUseTime[i] > delay:
                     player.lastUseTime[i] = now
                     if i.name == "Health Potion":
+                        drink.play()
                         i.effectFunc(player)
                         items[i] -= 1
                         if items[i] <= 0:
