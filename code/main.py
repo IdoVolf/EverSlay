@@ -110,12 +110,17 @@ while run:
                      player.defBoostTurns -= 1
                     if player.defBoostTurns == 0:
                      player.defenseBoost = 1.0
-
+                    
+                    if(player.attackBoostTurns > 0):
+                        player.attackBoostTurns -=1
+                    if(player.attackBoostTurns == 0):
+                        player.attackBoost =1.0
+                    
                     pos = player.attackMonster(slotStatus, target, slash)
                     if pos is not None:
                         slashPosCurrent = pos
                 elif btn.name == "item":
-                    gameState = Inventory(window,player)
+                    gameState= Inventory(window,player)
                 elif btn.name == "exit":
                     gameState = "menu"
                 elif btn.name == "shop":

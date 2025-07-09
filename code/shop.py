@@ -6,63 +6,84 @@ import random
 pygame.init()
 pygame.mixer.init()
 
-def Shop(window, player,rareN):
+def Shop(window, player, rareN):
+    # Load assets and setup
     bg = pygame.image.load(resource_path("assets/battle ui/bgs/inventory.png"))
-    clock = pygame.time.Clock()
-    myFont = pygame.font.Font(None, 24)
     cursor = pygame.image.load(resource_path("assets/cursors/crs1.png"))
-    prices = [100,150,200]
-    purchase = pygame.mixer.Sound(resource_path("assets/sound/cash-register-purchase-87313.mp3"))
-    lastPurcahse = 0
+    purchaseSound = pygame.mixer.Sound(resource_path("assets/sound/cash-register-purchase-87313.mp3"))
+    
+    clock = pygame.time.Clock()
+    font = pygame.font.Font(None, 24)
     buyDelay = 400
-    rareItem  = rare[rareN]
-    rareP = 200
-    uniqePos = (256,190)
+    lastPurchase = 0
+
+    pricesTop = [125,125, 125]
+    pricesBottom = [125, 150, 200]
+    rareItem = rare[rareN]
+    rarePrice = 250
+
     while True:
+        now = pygame.time.get_ticks()
         mousePos = pygame.mouse.get_pos()
         mousePressed = pygame.mouse.get_pressed()
 
-        now = pygame.time.get_ticks()
-
+        # Draw background and gold
         window.blit(bg, bg.get_rect())
+        displayText(window, f"Gold: {player.gold}", (20, 10), font, (255, 215, 0))
 
+        # Top row items
         for i, item in enumerate(regularShop):
-            x = 90 + i * 200  
-            y = 40
-            
+            x, y = 90 + i * 200, 40
             if item.icon:
-                window.blit(pygame.transform.scale(item.icon,(64,64)), (x, y))
-            rect = displayText(window, item.name, (x, y + 70), myFont, (0, 0, 0))
-            displayText(window, f"Gold: {player.gold}", (20, 10), myFont, (255, 215, 0))
-            if(rect.collidepoint(mousePos)):
-                displayText(window,f"{item.description}",mousePos,myFont,(0,0,0))
-                now= pygame.time.get_ticks()
-                if(mousePressed[2] and player.gold >= prices[i] and now - lastPurcahse > buyDelay):
-                    lastPurcahse =now
-                    player.gold -= prices[i]
-                    purchase.play()
-                    if(item in player.inventory.keys()):
-                        player.inventory[item]+=1
-                    else:
-                        player.inventory[item] = 1
-            displayText(window,f"{prices[i]}",(x+25,y+90),myFont,(0,0,0))
-            window.blit(pygame.transform.scale(rareItem.icon,(64,64)),(uniqePos[0],uniqePos[1]-20))
-            uniqeRect = displayText(window,f"{rareItem.name}",(uniqePos[0],uniqePos[1]-30),myFont,(255,215,100))
-            displayText(window,f"{rareP}",(uniqePos[0],uniqePos[1]+30),myFont,(255,215,100))
-            if(uniqeRect.collidepoint(mousePos)):
-                displayText(window,f"{rareItem.description}",mousePos,myFont,(255,215,100))
-                if(mousePressed[2] and player.gold >= rareP and now -lastPurcahse >buyDelay):
-                    player.gold -= rareP
-                    purchase.play()
-                    lastPurcahse = now
-                    if(rareItem in player.inventory.keys()):
-                        player.inventory[rareItem] +=1
-                    else:
-                        player.inventory[rareItem] = 1
+                window.blit(pygame.transform.scale(item.icon, (64, 64)), (x, y))
+            nameRect = displayText(window, item.name, (x, y + 70), font, (0, 0, 0))
+            displayText(window, f"{pricesTop[i]}", (x + 25, y + 90), font, (0, 0, 0))
 
+            if nameRect.collidepoint(mousePos):
+                displayText(window, item.description, mousePos, font, (0, 0, 0))
+                if mousePressed[2] and player.gold >= pricesTop[i] and now - lastPurchase > buyDelay:
+                    lastPurchase = now
+                    player.gold -= pricesTop[i]
+                    purchaseSound.play()
+                    player.inventory[item] = player.inventory.get(item, 0) + 1
+
+        # Middle unique item
+        ux, uy = 256, 190
+        if rareItem.icon:
+            window.blit(pygame.transform.scale(rareItem.icon, (64, 64)), (ux, uy - 20))
+        rareRect = displayText(window, rareItem.name, (ux, uy - 30), font, (255, 215, 100))
+        displayText(window, f"{rarePrice}", (ux, uy + 30), font, (255, 215, 100))
+
+        if rareRect.collidepoint(mousePos):
+            displayText(window, rareItem.description, mousePos, font, (255, 215, 100))
+            if mousePressed[2] and player.gold >= rarePrice and now - lastPurchase > buyDelay:
+                lastPurchase = now
+                player.gold -= rarePrice
+                purchaseSound.play()
+                player.inventory[rareItem] = player.inventory.get(rareItem, 0) + 1
+
+        # Bottom row items
+        for i, item in enumerate(regularBottom):
+            x, y = 90 + i * 200, 270
+            if item.icon:
+                window.blit(pygame.transform.scale(item.icon, (64, 64)), (x, y))
+            nameRect = displayText(window, item.name, (x, y + 70), font, (0, 0, 0))
+            displayText(window, f"{pricesBottom[i]}", (x + 25, y + 90), font, (0, 0, 0))
+
+            if nameRect.collidepoint(mousePos):
+                displayText(window, item.description, mousePos, font, (0, 0, 0))
+                if mousePressed[2] and player.gold >= pricesBottom[i] and now - lastPurchase > buyDelay:
+                    lastPurchase = now
+                    player.gold -= pricesBottom[i]
+                    purchaseSound.play()
+                    player.inventory[item] = player.inventory.get(item, 0) + 1
+
+        # Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return "game"
+
+        # Cursor and update
         window.blit(cursor, mousePos)
         pygame.display.update()
         clock.tick(60)

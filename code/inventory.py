@@ -68,6 +68,18 @@ def Inventory(window, player):
                         if(items[i] <=0):
                             del items[i]
                             del player.lastUseTime[i]
+                    elif i.name == "attack potion":
+                        i.effectFunc(player)
+                        items[i] -=1
+                        if(items[i] <=0):
+                            del items[i]
+                            del player.lastUseTime[i]
+                    elif i.name == "ladder":
+                        slotStatus, encounterNumber = i.effectFunc(slotStatus,encounterNumber)
+                        items[i] -=1
+                        if(items[i] <= 0):
+                            del items[i]
+                            del player.lastUseTime[i]
                     elif i in equipables:
                         i.effectFunc(player, i.name)
                         items[i] -= 1

@@ -21,14 +21,16 @@ class Player:
         self.isAttacking = False
         self.attackStart = 0
         self.attackDuration = 800
-        self.gold = 50
+        self.gold = 500
         self.defenseBoost =1
         self.defBoostTurns =0
+        self.attackBoost = 1
+        self.attackBoostTurns = 0
         self.inventory = {}
 
 
     def getDmg(self):
-        return weaponToDmg[self.weapon]
+        return round(weaponToDmg[self.weapon] * self.attackBoost)
     
     def getDefense(self):
         return round(armorToDefense[self.armor]*self.defenseBoost,2)
