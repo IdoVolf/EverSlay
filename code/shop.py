@@ -17,7 +17,7 @@ def Shop(window, player, rareN):
     buyDelay = 400
     lastPurchase = 0
 
-    pricesTop = [125,125, 125]
+    pricesTop = [100,125, 75]
     pricesBottom = [125, 150, 200]
     rareItem = rare[rareN]
     rarePrice = 250
@@ -40,7 +40,7 @@ def Shop(window, player, rareN):
             displayText(window, f"{pricesTop[i]}", (x + 25, y + 90), font, (0, 0, 0))
 
             if nameRect.collidepoint(mousePos):
-                displayText(window, item.description, mousePos, font, (0, 0, 0))
+                displayText(window, item.description, (mousePos[0],mousePos[1]-30), font, (0, 0, 0))
                 if mousePressed[2] and player.gold >= pricesTop[i] and now - lastPurchase > buyDelay:
                     lastPurchase = now
                     player.gold -= pricesTop[i]
@@ -55,7 +55,7 @@ def Shop(window, player, rareN):
         displayText(window, f"{rarePrice}", (ux, uy + 30), font, (255, 215, 100))
 
         if rareRect.collidepoint(mousePos):
-            displayText(window, rareItem.description, mousePos, font, (255, 215, 100))
+            displayText(window, rareItem.description, (mousePos[0],mousePos[1]-30), font, (255, 215, 100))
             if mousePressed[2] and player.gold >= rarePrice and now - lastPurchase > buyDelay:
                 lastPurchase = now
                 player.gold -= rarePrice
@@ -71,7 +71,7 @@ def Shop(window, player, rareN):
             displayText(window, f"{pricesBottom[i]}", (x + 25, y + 90), font, (0, 0, 0))
 
             if nameRect.collidepoint(mousePos):
-                displayText(window, item.description, mousePos, font, (0, 0, 0))
+                displayText(window, item.description, (mousePos[0],mousePos[1]-30), font, (0, 0, 0))
                 if mousePressed[2] and player.gold >= pricesBottom[i] and now - lastPurchase > buyDelay:
                     lastPurchase = now
                     player.gold -= pricesBottom[i]

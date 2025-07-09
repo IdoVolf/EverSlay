@@ -116,6 +116,11 @@ while run:
                     if(player.attackBoostTurns == 0):
                         player.attackBoost =1.0
                     
+                    if(player.weapon == "bomb"):
+                        player.bombTurns -=1
+                        if(player.bombTurns == 0):
+                            player.weapon = "stick"
+                    
                     pos = player.attackMonster(slotStatus, target, slash)
                     if pos is not None:
                         slashPosCurrent = pos

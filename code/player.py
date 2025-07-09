@@ -2,7 +2,7 @@ import pygame
 from reso import resource_path
 pygame.init()
 
-weaponToDmg = {"stick":3,"scythe":7,"dagger":16,"annoying dog?":1,"great sword":30,"mace":26,
+weaponToDmg = {"stick":3,"scythe":7,"dagger":16,"annoying dog?":1,"bomb":40,"mace":26,
                "axe":22}
 armorToDefense = {"blue shirt":0.1,"baseball hat":0.2,"cupboard":0.3,"crown":0.45,"chestplate":0.55}
 
@@ -21,11 +21,12 @@ class Player:
         self.isAttacking = False
         self.attackStart = 0
         self.attackDuration = 800
-        self.gold = 500
+        self.gold = 100
         self.defenseBoost =1
         self.defBoostTurns =0
         self.attackBoost = 1
         self.attackBoostTurns = 0
+        self.bombTurns = 0
         self.inventory = {}
 
 

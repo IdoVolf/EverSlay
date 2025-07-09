@@ -23,6 +23,9 @@ def addDmg(player):
         player.attackBoost = 1.5
         player.attackBoostTurns = 2
 
+def Bomb(player):
+    player.weapon = "bomb"
+    player.bombTurns =2
 
 class Item:
     def __init__(self, name, description, icon, effectFunc):
@@ -44,7 +47,7 @@ daggerI = pygame.image.load(resource_path("assets/items/dagger.png"))
 maceI = pygame.image.load(resource_path("assets/items/mace.png"))
 defensePI = pygame.image.load(resource_path("assets/items/defenseP.png"))
 attackPI = pygame.image.load(resource_path("assets/items/attackPotion.png"))
-
+bombI = pygame.image.load(resource_path("assets/items/bomb.png"))
 
 gem = Item("Gem","a rare stone worth - 50G",gemI,sell)
 healthPoition = Item("Health Potion","A poition that heals..",healthI,heal)
@@ -59,11 +62,12 @@ dagger = Item("dagger","a dagger...",daggerI,changeWeapon)
 mace = Item("mace","a stick with pointy metal ball on top",maceI,changeWeapon)
 defenseP = Item("Defense potion","gives you defense",defensePI,addDefenseBoost)
 attackP = Item("attack potion","give you attack bonous for 1 attack",attackPI,addDmg)
+bomb = Item("bomb","a bomb can be used once after destroyed becomes a stick..",bombI,Bomb)
 
-treasures = [gem,gem,gem,healthPoition,stick,crown,trash1,trash1,scythe,cupboard,dagger,axe,defenseP,attackP]
-equipables = [axe,stick,crown,scythe,chestplate,cupboard,dagger,mace]
+treasures = [gem,gem,gem,healthPoition,stick,crown,trash1,trash1,scythe,cupboard,dagger,axe,defenseP,attackP,bomb,gem,trash1,gem]
+equipables = [axe,stick,crown,scythe,chestplate,cupboard,dagger,mace,bomb]
 regularShop = [healthPoition,attackP,defenseP]
-regularBottom = [cupboard,dagger,crown]
+regularBottom = [bomb,dagger,crown]
 rare = [axe,chestplate,mace]
-g30Sell = [dagger,crown,axe,defenseP,healthPoition,attackP]
+g30Sell = [dagger,crown,axe,defenseP,healthPoition,attackP,chestplate,bomb]
 g10Sell = [trash1,stick,cupboard,scythe]
