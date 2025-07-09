@@ -15,6 +15,9 @@ def heal(player):
 def sell(player,price):
     player.gold += price
 
+def addDefenseBoost(player):
+    player.defenseBoost = 1.5
+    player.defBoostTurns =2
 class Item:
     def __init__(self, name, description, icon, effectFunc):
         self.name = name
@@ -32,6 +35,8 @@ scytheI = pygame.image.load(resource_path("assets/items/scythe.png"))
 chestplateI = pygame.image.load(resource_path("assets/items/chestplate.png"))
 cupboardI =  pygame.image.load(resource_path("assets/items/cupboard.png"))
 daggerI = pygame.image.load(resource_path("assets/items/dagger.png"))
+maceI = pygame.image.load(resource_path("assets/items/mace.png"))
+defensePI = pygame.image.load(resource_path("assets/items/defenseP.png"))
 
 gem = Item("Gem","a rare stone worth - 50G",gemI,sell)
 healthPoition = Item("Health Potion","A poition that heals..",healthI,heal)
@@ -43,8 +48,13 @@ scythe = Item("scythe","an ugly looking scythe",scytheI,changeWeapon)
 chestplate = Item("chestplate","a shiny mettalic chestplate",chestplateI,changeArmor)
 cupboard = Item("cupboard","an armor made out of cupboard",cupboardI,changeArmor)
 dagger = Item("dagger","a dagger...",daggerI,changeWeapon)
+mace = Item("mace","a stick with pointy metal ball on top",maceI,changeWeapon)
+defenseP = Item("Defense potion","gives you defense",defensePI,addDefenseBoost)
 
-treasures = [gem,gem,gem,healthPoition,stick,crown,trash1,trash1,scythe,cupboard,dagger]
-equipables = [axe,stick,crown,scythe,chestplate,cupboard,dagger]
+treasures = [gem,gem,gem,healthPoition,stick,crown,trash1,trash1,scythe,cupboard,dagger,axe,defenseP]
+equipables = [axe,stick,crown,scythe,chestplate,cupboard,dagger,mace]
 regularShop = [healthPoition,crown,dagger]
-rare = [axe,chestplate]
+regularBottom = [defenseP]
+rare = [axe,chestplate,mace]
+g30Sell = [dagger,crown,axe,defenseP,healthPoition]
+g10Sell = [trash1,stick,cupboard,scythe]

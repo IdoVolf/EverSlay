@@ -1,5 +1,5 @@
 import pygame
-from item import Item ,equipables
+from item import Item ,equipables,g10Sell,g30Sell
 from reso import resource_path
 from menu import displayText 
 import random
@@ -62,6 +62,12 @@ def Inventory(window, player):
                         if(items[i] <=0):
                             del items[i]
                             del player.lastUseTime[i]
+                    elif i.name == "Defense potion":
+                        i.effectFunc(player)
+                        items[i] -=1
+                        if(items[i] <=0):
+                            del items[i]
+                            del player.lastUseTime[i]
                     elif i in equipables:
                         i.effectFunc(player, i.name)
                         items[i] -= 1
@@ -70,9 +76,15 @@ def Inventory(window, player):
                             del player.lastUseTime[i]
 
                 elif midPressed and not prevMidPressed and now - player.lastUseTime[i] > delay:
+                    items[i] -=1
                     player.lastUseTime[i] = now
-                    del items[i]
-                    del player.lastUseTime[i]
+                    if(i in g10Sell):
+                        player.gold +=10
+                    elif(i in g30Sell):
+                        player.gold += 30
+                    if(items[i] <=0):
+                        del items[i]
+                        del player.lastUseTime[i]
 
             count += 1
 

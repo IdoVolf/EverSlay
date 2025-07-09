@@ -71,7 +71,8 @@ indicPoses = [(280,30), (70,30), (470,30)]    # same here for indicator
 scale = 0
 hardScale = 0
 newKill = True
-rareN = random.randint(0,len(rare))
+rareN = random.randint(0,len(rare)-1)
+defBoostActive = False
 
 while run:
     if gameState == "menu":
@@ -84,6 +85,10 @@ while run:
         killPriority = False
         turnIndex = 0
         target = 1  # always start targeting center slot
+        scale = 0
+        hardScale = 0
+        newKill = True
+        rareN = random.randint(0,len(rare)-1)
 
     elif gameState == "game":
         now = pygame.time.get_ticks()
@@ -101,6 +106,11 @@ while run:
             btn.draw(window, mousePoS)
             if btn.isClicked(mousePoS, mousePressed) and turn == "player" and not player.isAttacking:
                 if btn.name == "fight":
+                    if player.defBoostTurns > 0:
+                     player.defBoostTurns -= 1
+                    if player.defBoostTurns == 0:
+                     player.defenseBoost = 1.0
+
                     pos = player.attackMonster(slotStatus, target, slash)
                     if pos is not None:
                         slashPosCurrent = pos
@@ -158,6 +168,9 @@ while run:
         #diff scale
         hardScale,scale,newKill,rareN = scaleDiff(player.monsterKilled,scale,hardScale,newKill,rare,rareN)
         turn, lastTurnTime, turnIndex, player = monsterAttack(turn, now, lastTurnTime, turnIndex, monsters, bite, player)
+        # Only reduce defense boost during monster turn
+
+    
         # Draw indicator on targeted slot (only if that slot is alive)
         if slotStatus[target] is not None:
             lastFrame, frame = drawIndicator(window, indicPoses[target], lastFrame, delay, frame)
