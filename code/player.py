@@ -21,7 +21,7 @@ class Player:
         self.isAttacking = False
         self.attackStart = 0
         self.attackDuration = 800
-        self.gold = 200
+        self.gold = 50
         self.inventory = {}
 
     def getHit(self,dmg):
