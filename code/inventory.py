@@ -63,12 +63,14 @@ def Inventory(window, player):
                             del items[i]
                             del player.lastUseTime[i]
                     elif i.name == "Defense potion":
+                        drink.play()
                         i.effectFunc(player)
                         items[i] -=1
                         if(items[i] <=0):
                             del items[i]
                             del player.lastUseTime[i]
                     elif i.name == "attack potion":
+                        drink.play()
                         i.effectFunc(player)
                         items[i] -=1
                         if(items[i] <=0):

@@ -184,6 +184,11 @@ while run:
         # Draw indicator on targeted slot (only if that slot is alive)
         if slotStatus[target] is not None:
             lastFrame, frame = drawIndicator(window, indicPoses[target], lastFrame, delay, frame)
+
+        if(player.armor == "medi bag"):
+            player.maxHp = 70
+        else:
+            player.maxHp =50
         displayPlayerInfo(window,player)
         window.blit(cursor, mousePoS)
         pygame.display.update()
