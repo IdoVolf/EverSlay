@@ -170,13 +170,13 @@ while run:
 
         # Monster attack turn logic
         # Spawn monsters in empty slots
-        slotStatus, monsters = spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlots)
+        slotStatus, monsters = spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlots,player.monsterKilled)
         # Player attack animation
         turn,lastTurnTime,killPriority = player.slashAnim(window,slashPoss,slashPosCurrent,lastTurnTime,turn,killPriority)
         # Adjust encounter number by monsters killed
         encounterNum = encounterScale(player.monsterKilled)
         #diff scale
-        hardScale,scale,newKill,rareN = scaleDiff(player.monsterKilled,scale,hardScale,newKill,rare,rareN)
+        hardScale,scale,newKill,rareN,player.gold= scaleDiff(player.monsterKilled,scale,hardScale,newKill,rare,rareN,player.gold)
         turn, lastTurnTime, turnIndex, player = monsterAttack(turn, now, lastTurnTime, turnIndex, monsters, bite, player)
         # Only reduce defense boost during monster turn
 

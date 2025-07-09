@@ -17,8 +17,8 @@ def Shop(window, player, rareN):
     buyDelay = 400
     lastPurchase = 0
 
-    pricesTop = [100,125, 75]
-    pricesBottom = [125, 150, 200]
+    pricesTop = [75,75, 75]
+    pricesBottom = [100, 125, 150]
     rareItem = rare[rareN]
     rarePrice = 250
 

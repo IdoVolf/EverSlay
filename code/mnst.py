@@ -101,13 +101,14 @@ def drawIndicator(window, pos, lastFrame, delay, frame):
     window.blit(pygame.transform.scale(indic[frame],(48,48)), pos)
     return lastFrame, frame
 
-def scaleDiff(playerMonsteredKilled,scale,hardScale,newKill,rare,rareN):
+def scaleDiff(playerMonsteredKilled,scale,hardScale,newKill,rare,rareN,pGold):
         if(playerMonsteredKilled % 10 == 0 and playerMonsteredKilled != 0 and newKill and scale < 7 and hardScale < 10):
             hardScale +=1
             scale +=1
             newKill = False 
+            pGold += 50
             rareN = random.randint(0,len(rare)-1)
-        return hardScale,scale,newKill,rareN
+        return hardScale,scale,newKill,rareN,pGold
 
 def encounterScale(mnsKilled):
     if mnsKilled != 0:
@@ -119,16 +120,16 @@ def encounterScale(mnsKilled):
                 return 1
     return 1
 
-def spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlots):
+def spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlots,mnsKilled):
     # Spawn monsters
     for i in range(len(slotStatus)):
         if slotStatus[i] is None and sum(1 for m in slotStatus if m is not None) < encounterNum:
             isMed = random.randint(scale, 10)
             isHard = random.randint(hardScale, 20)
 
-            if isMed == 10:
+            if isMed == 10 and mnsKilled >6:
                 newMonst = generateMedMnst(mnsAssets)
-            elif isHard == 20:
+            elif isHard == 20 and mnsKilled >12:
                 newMonst = generateHardMnst(mnsAssets)
             else:
                 newMonst = generateRandomMnst(mnsAssets)

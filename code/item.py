@@ -67,7 +67,7 @@ attackP = Item("attack potion","give you attack bonous for 1 attack",attackPI,ad
 bomb = Item("bomb","a bomb can be used once after destroyed becomes a stick..",bombI,Bomb)
 mediBag = Item("medi bag","low defense more max hp..",mediI,changeArmor)
 
-treasures = [gem,gem,gem,healthPoition,stick,crown,trash1,trash1,scythe,cupboard,dagger,defenseP,attackP,bomb,gem,trash1,gem]
+treasures = [gem,gem,gem,healthPoition,stick,crown,trash1,trash1,scythe,cupboard,dagger,defenseP,attackP,bomb,gem,trash1,gem,axe,gem]
 equipables = [axe,stick,crown,scythe,chestplate,cupboard,dagger,mace,bomb,mediBag]
 regularShop = [healthPoition,attackP,defenseP]
 regularBottom = [cupboard,dagger,crown]
