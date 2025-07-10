@@ -101,7 +101,7 @@ while run:
             if event.type == pygame.QUIT:
                 gameState = "menu"
 
-        gameState = player.die()
+        gameState = player.die(window)
         for btn in btns:
             btn.draw(window, mousePoS)
             if btn.isClicked(mousePoS, mousePressed) and turn == "player" and not player.isAttacking:

@@ -1,6 +1,7 @@
 import pygame
 from reso import resource_path
 pygame.init()
+from death import Death
 
 weaponToDmg = {"stick":3,"scythe":7,"dagger":16,"annoying dog?":1,"bomb":40,"mace":30,
                "axe":22}
@@ -62,9 +63,9 @@ class Player:
             return target
         return None
 
-    def die(self):
+    def die(self,window):
         if(self.hp < 1):
-            return "menu"
+            return Death(window,self)
         return "game"
     
     def slashAnim(self,window,slashPoss,slashPosCurrent,lastTurnTime,turn,killPriority):
