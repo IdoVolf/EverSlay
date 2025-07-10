@@ -106,7 +106,10 @@ def scaleDiff(playerMonsteredKilled,scale,hardScale,newKill,rare,rareN,pGold):
             hardScale +=1
             scale +=1
             newKill = False 
-            pGold += 50
+            pGold +=50
+            rareN = random.randint(0,len(rare)-1)
+        elif(playerMonsteredKilled % 10 == 0):
+            pGold +=50
             rareN = random.randint(0,len(rare)-1)
         return hardScale,scale,newKill,rareN,pGold
 

@@ -4,10 +4,11 @@ from reso import resource_path
 pygame.init()
 
 
+
 def Death(window,player):
     clock = pygame.time.Clock()
     myFont = pygame.font.Font(None,80)
-    cursor = pygame.image.load(resource_path("assets/cursors/crs1.png"))
+    cursor = pygame.image.load(resource_path("assets/cursors/crs2.png"))  
 
     while True:
         mousePos = pygame.mouse.get_pos()
@@ -21,7 +22,7 @@ def Death(window,player):
                 return "menu"
             
         
-        if(txt.collidepoint(mousePos) and mousePressed[1]):
+        if(txt.collidepoint(mousePos) and mousePressed[0]):
             return "menu"
         
         window.blit(cursor,mousePos)
