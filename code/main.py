@@ -27,7 +27,6 @@ monsters = []
 pygame.mouse.set_visible(False)
 player = Player()
 killPriority = False
-
 # Target is now the slot index: 0=left, 1=center, 2=right
 target = 1
 
@@ -90,7 +89,6 @@ while run:
         hardScale = 0
         newKill = True
         rareN = random.randint(0,len(rare)-1)
-
     elif gameState == "game":
         now = pygame.time.get_ticks()
         mousePoS = pygame.mouse.get_pos()
