@@ -95,7 +95,6 @@ while run:
         now = pygame.time.get_ticks()
         mousePoS = pygame.mouse.get_pos()
         mousePressed = pygame.mouse.get_pressed()
-
         window.blit(bg, bg.get_rect())
 
         for event in pygame.event.get():

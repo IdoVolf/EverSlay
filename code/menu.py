@@ -1,6 +1,7 @@
 import pygame
 from btn import Button
 from reso import resource_path
+from keys import KeyShow
 pygame.init()
 
 def menu(window):
@@ -8,8 +9,8 @@ def menu(window):
     cursor = pygame.image.load(resource_path("assets/cursors/crs1.png"))
     bg = pygame.image.load(resource_path("assets/menuBg.png"))
     play = Button((290,90),(50,50),pygame.image.load(resource_path("assets/btns/playBtn1.png")),pygame.image.load(resource_path("assets/btns/playBtn2.png")),"play")
-    exit = Button((290,170),(50,50),pygame.image.load(resource_path("assets/btns/exitBtn1.png")),pygame.image.load(resource_path("assets/btns/exitBtn2.png")),"exit")
-    mouse = Button((290,250),(50,50),pygame.image.load(resource_path("assets/btns/mouse1.png")),pygame.image.load(resource_path("assets/btns/mouse2.png")),"mouse")
+    exit = Button((290,250),(50,50),pygame.image.load(resource_path("assets/btns/exitBtn1.png")),pygame.image.load(resource_path("assets/btns/exitBtn2.png")),"exit")
+    mouse = Button((290,170),(50,50),pygame.image.load(resource_path("assets/btns/mouse1.png")),pygame.image.load(resource_path("assets/btns/mouse2.png")),"mouse")
     btns = [play,exit,mouse]
     click = pygame.mixer.Sound(resource_path("assets/sound/click.mp3"))
 
@@ -32,6 +33,8 @@ def menu(window):
                     return "game",True
                 elif(btn.name == "exit"):
                     return "game",False
+                elif(btn.name == "mouse"):
+                    return KeyShow(window)
         
         pygame.display.update()
         clock.tick(60)

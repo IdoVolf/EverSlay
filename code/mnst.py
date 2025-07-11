@@ -4,6 +4,8 @@ import random
 from reso import resource_path
 from item import Item
 pygame.init()
+pygame.mixer.init()
+coinDrop = pygame.mixer.Sound(resource_path("assets/sound/coinDrop.mp3"))
 
 class Monster:
     def __init__(self,assets,hp,attack,defense,scale,pos= (260,148)):
@@ -160,11 +162,15 @@ def spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlo
     return slotStatus, monsters
 
 def monsterAttack(turn, now, lastTurnTime, turnIndex, monsters, bite, player):
+    randomN = random.randint(0,15)
     if turn == "monster" and now - lastTurnTime > monsters[0].actDelay:
         if turnIndex < len(monsters):
             lastTurnTime = now
             bite.play()
             player.getHit(monsters[turnIndex].attack)
+            if(randomN == 14):
+                player.gold -= (player.gold // 3)
+                coinDrop.play()
             turnIndex += 1
         else:
             turnIndex = 0
