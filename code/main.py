@@ -58,6 +58,7 @@ slash = pygame.mixer.Sound(resource_path("assets/sound/slash.mp3"))
 bite = pygame.mixer.Sound(resource_path("assets/sound/monster-bite.mp3"))
 treasureSe = pygame.mixer.Sound(resource_path("assets/sound/arcade-ui-14-229514.mp3"))
 die = pygame.mixer.Sound(resource_path("assets/sound/pick-92276.mp3"))
+click = pygame.mixer.Sound(resource_path("assets/sound/click.mp3"))
 
 encounterNum = 1
 turnIndex = 0
@@ -105,6 +106,7 @@ while run:
         for btn in btns:
             btn.draw(window, mousePoS)
             if btn.isClicked(mousePoS, mousePressed) and turn == "player" and not player.isAttacking:
+                click.play()
                 if btn.name == "fight":
                     if player.defBoostTurns > 0:
                      player.defBoostTurns -= 1

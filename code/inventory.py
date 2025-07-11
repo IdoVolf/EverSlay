@@ -13,6 +13,8 @@ def Inventory(window, player):
     myFont = pygame.font.Font(None, 24)
     cursor = pygame.image.load(resource_path("assets/cursors/crs1.png"))
     drink = pygame.mixer.Sound(resource_path("assets/sound/drinking-coffe-107121.mp3"))
+    click = pygame.mixer.Sound(resource_path("assets/sound/click.mp3"))
+    purchaseSound = pygame.mixer.Sound(resource_path("assets/sound/cash-register-purchase-87313.mp3"))
 
     delay = 5000  # 5 seconds per item
     if not hasattr(player, "lastUseTime"):
@@ -48,18 +50,13 @@ def Inventory(window, player):
                 displayText(window, f"{i.description}", (mousePos[0] + 20, mousePos[1] + 20), myFont)
 
                 if rightPressed and not prevRightPressed and now - player.lastUseTime[i] > delay:
+                    click.play()
                     player.lastUseTime[i] = now
                     if i.name == "Health Potion":
                         drink.play()
                         i.effectFunc(player)
                         items[i] -= 1
                         if items[i] <= 0:
-                            del items[i]
-                            del player.lastUseTime[i]
-                    elif i.name == "Gem":
-                        i.effectFunc(player,50)
-                        items[i] -=1
-                        if(items[i] <=0):
                             del items[i]
                             del player.lastUseTime[i]
                     elif i.name == "Defense potion":
@@ -93,12 +90,16 @@ def Inventory(window, player):
                             del player.lastUseTime[i]
 
                 elif midPressed and not prevMidPressed and now - player.lastUseTime[i] > delay:
+                    click.play()
+                    purchaseSound.play()
                     items[i] -=1
                     player.lastUseTime[i] = now
                     if(i in g10Sell):
                         player.gold +=10
                     elif(i in g30Sell):
                         player.gold += 30
+                    elif(i.name == "Gem"):
+                        player.gold +=50
                     if(items[i] <=0):
                         del items[i]
                         del player.lastUseTime[i]
