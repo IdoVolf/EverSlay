@@ -131,6 +131,10 @@ while run:
                     gameState = "menu"
                 elif btn.name == "shop":
                     gameState = Shop(window,player,rareN)
+            elif(btn.isHovered(mousePoS)):
+                if(btn.name == "exit"):
+                    target =2
+                    displayText(window,"WARNING EXITING WILL NOT SAVE YOUR RUN!",(50,60),myFont,(0,0,0))
 
         # Display monsters and update
         monsters = []  # We'll rebuild this list for convenience (not used for indexing target!)

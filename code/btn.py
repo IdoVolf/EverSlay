@@ -27,3 +27,6 @@ class Button:
         else:
             self.clicked = False
         return False
+    
+    def isHovered(self,mousePos):
+        return self.rect.collidepoint(mousePos)
