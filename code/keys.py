@@ -33,7 +33,7 @@ def KeyShow(window):
         
         displayText1(window,"Inventory",(50,50),myFontBig,color)
         displayText1(window,"using - right click",(50,80),myFont,color)
-        displayText1(window,"selling - left click",(50,100),myFont,color)
+        displayText1(window,"selling - middle click",(50,100),myFont,color)
 
         displayText1(window,"Shop",(50,150),myFontBig,color)
         displayText1(window,"buying - right click",(50,180),myFont,color)
