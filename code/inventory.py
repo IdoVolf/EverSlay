@@ -16,7 +16,7 @@ def Inventory(window, player):
     click = pygame.mixer.Sound(resource_path("assets/sound/click.mp3"))
     purchaseSound = pygame.mixer.Sound(resource_path("assets/sound/cash-register-purchase-87313.mp3"))
 
-    delay = 5000  # 5 seconds per item
+    delay = 1000  #  second per item
     if not hasattr(player, "lastUseTime"):
         player.lastUseTime = {}
 

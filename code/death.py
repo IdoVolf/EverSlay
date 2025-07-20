@@ -4,7 +4,6 @@ from reso import resource_path
 pygame.init()
 
 
-
 def Death(window,player):
     clock = pygame.time.Clock()
     myFont = pygame.font.Font(None,80)
@@ -15,7 +14,7 @@ def Death(window,player):
         mousePressed = pygame.mouse.get_pressed()
         window.fill((0,0,0))
         txt = displayText(window,f"You Died",(250,180),myFont)
-
+        displayText(window,f"You killed {player.monsterKilled}",(250,235),myFont)
 
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
