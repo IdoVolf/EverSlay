@@ -73,5 +73,5 @@ equipables = [axe,stick,crown,scythe,chestplate,cupboard,dagger,mace,bomb,mediBa
 regularShop = [healthPoition,attackP,defenseP]
 regularBottom = [cupboard,dagger,crown]
 rare = [axe,chestplate,mace,bomb,mediBag,pan]
-g30Sell = [dagger,crown,axe,defenseP,healthPoition,attackP,chestplate,bomb,mediBag]
+g30Sell = [dagger,crown,axe,defenseP,healthPoition,attackP,chestplate,bomb,mediBag,pan]
 g10Sell = [trash1,stick,cupboard,scythe]

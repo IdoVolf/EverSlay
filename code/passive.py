@@ -23,7 +23,7 @@ def vampF(player):
     return player
 
 def critF(player):
-    player.crit += 2
+    player.crit += 6
     return player
 
 def PassiveBuffs(player,window):

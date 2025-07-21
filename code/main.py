@@ -83,7 +83,7 @@ rareN = random.randint(0,len(rare)-1)
 defBoostActive = False
 dif = ["easy","med","hard"]
 xps = [1,2,3]
-requiredXp = 15
+requiredXp = 10
 
 while run:
     if gameState == "menu":
@@ -100,7 +100,7 @@ while run:
         hardScale = 0
         newKill = True
         rareN = random.randint(0,len(rare)-1)
-        requiredXp  = 15
+        requiredXp  = 10
     elif gameState == "game":
         now = pygame.time.get_ticks()
         mousePoS = pygame.mouse.get_pos()

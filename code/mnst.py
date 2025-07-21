@@ -85,6 +85,9 @@ def generateMedMnst(assets):
 def generateHardMnst(assets):
     return Monster(assets[random.randint(0,len(assets)-1)],random.randint(35,55),random.randint(17,25),round(random.choice(monsterHardDefs),2),(88,88),"hard")
 
+def generateBoss(assets):
+    return Monster(assets[random.randint(0,len(assets)-1)],random.choice([75,100]),random.choice([20,25,30]),random.choice([0.55,0.45]),(125,125),"BOSS")
+
 indic = [pygame.image.load(resource_path("assets/uniqe/indicator/indicator1.png")),
          pygame.image.load(resource_path("assets/uniqe/indicator/indicator2.png")),
          pygame.image.load(resource_path("assets/uniqe/indicator/indicator3.png")),
@@ -131,15 +134,28 @@ def spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlo
     # Spawn monsters
     for i in range(len(slotStatus)):
         if slotStatus[i] is None and sum(1 for m in slotStatus if m is not None) < encounterNum:
-            isMed = random.randint(scale, 10)
-            isHard = random.randint(hardScale, 20)
+            isMed = (random.randint(scale, 10) == 10)
+            isHard = (random.randint(hardScale, 20)==20)
 
-            if isMed == 10 and mnsKilled >6:
-                newMonst = generateMedMnst(mnsAssets)
-            elif isHard == 20 and mnsKilled >12:
-                newMonst = generateHardMnst(mnsAssets)
+            if(mnsKilled < 45):
+                if isMed  and mnsKilled >6:
+                    newMonst = generateMedMnst(mnsAssets)
+                elif isHard and mnsKilled >12:
+                    newMonst = generateHardMnst(mnsAssets)
+                else:
+                    newMonst = generateRandomMnst(mnsAssets)
             else:
-                newMonst = generateRandomMnst(mnsAssets)
+                choice = random.choice([1,0,2])
+                if(choice == 0):
+                    newMonst = generateMedMnst(mnsAssets)
+                elif(choice ==1):
+                    newMonst = generateHardMnst(mnsAssets)
+                else:
+                    newMonst = generateRandomMnst(mnsAssets)
+            if(mnsKilled % 50 == 0 and mnsKilled !=0):
+                monsterSlots.clear()
+                newMonst = generateBoss(mnsAssets)
+                mnsKilled +=1
 
             newMonst.pos = monsterSlots[i]
             slotStatus[i] = newMonst
