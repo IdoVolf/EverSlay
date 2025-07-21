@@ -19,6 +19,8 @@ def Death(window,player):
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
                 return "menu"
+            if(event.type == pygame.KEYDOWN):
+                return "menu"
             
         
         if(txt.collidepoint(mousePos) and mousePressed[0]):
