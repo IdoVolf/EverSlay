@@ -84,7 +84,6 @@ defBoostActive = False
 dif = ["easy","med","hard"]
 xps = [1,2,3]
 requiredXp = 10
-
 while run:
     if gameState == "menu":
         gameState, run = menu(window)

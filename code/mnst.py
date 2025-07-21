@@ -121,6 +121,8 @@ def scaleDiff(playerMonsteredKilled,scale,hardScale,newKill,rare,rareN,pGold,pGa
         return hardScale,scale,newKill,rareN,pGold
 
 def encounterScale(mnsKilled):
+    if(mnsKilled == 49 or mnsKilled == 50):
+        return 1
     if mnsKilled != 0:
         if mnsKilled % 5 == 0:
                 return 3
@@ -128,16 +130,18 @@ def encounterScale(mnsKilled):
                 return  2
         else:
                 return 1
+        
     return 1
 
 def spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlots,mnsKilled):
     # Spawn monsters
+    bossS = False
     for i in range(len(slotStatus)):
         if slotStatus[i] is None and sum(1 for m in slotStatus if m is not None) < encounterNum:
             isMed = (random.randint(scale, 10) == 10)
             isHard = (random.randint(hardScale, 20)==20)
 
-            if(mnsKilled < 45):
+            if(mnsKilled < 45): 
                 if isMed  and mnsKilled >6:
                     newMonst = generateMedMnst(mnsAssets)
                 elif isHard and mnsKilled >12:
@@ -152,14 +156,14 @@ def spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlo
                     newMonst = generateHardMnst(mnsAssets)
                 else:
                     newMonst = generateRandomMnst(mnsAssets)
-            if(mnsKilled % 50 == 0 and mnsKilled !=0):
+            if(mnsKilled % 50 == 0 and mnsKilled !=0 ):
                 newMonst = generateBoss(mnsAssets)
-                mnsKilled +=1
 
             newMonst.pos = monsterSlots[i]
             slotStatus[i] = newMonst
             break
-
+        
+    
     # Fix overlapping / positions
     alive_slots = [i for i, m in enumerate(slotStatus) if m is not None]
 
