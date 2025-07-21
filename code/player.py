@@ -2,6 +2,8 @@ import pygame
 from reso import resource_path
 pygame.init()
 from death import Death
+import random
+pygame.mixer.init()
 
 weaponToDmg = {"stick":3,"scythe":7,"dagger":16,"annoying dog?":1,"bomb":40,"mace":30,
                "axe":22}
@@ -11,6 +13,7 @@ slashAnim = [pygame.image.load(resource_path("assets/uniqe/slash1.png")),pygame.
              pygame.image.load(resource_path("assets/uniqe/slash3.png")),pygame.image.load(resource_path("assets/uniqe/slash4.png")),
              pygame.image.load(resource_path("assets/uniqe/slash5.png")),pygame.image.load(resource_path("assets/uniqe/slash6.png")),
              pygame.image.load(resource_path("assets/uniqe/slash7.png")),pygame.image.load(resource_path("assets/uniqe/slash8.png"))]
+crit = pygame.mixer.Sound(resource_path("assets/sound/crit.mp3"))
 
 class Player:
     def __init__(self):
@@ -34,6 +37,7 @@ class Player:
         self.vamp = 0
         self.armHpB = 0
         self.xp =0
+        self.crit = 3 #%
         self.inventory = {}
 
 
@@ -62,13 +66,17 @@ class Player:
 
     def attackMonster(self, slotStatus, target, slash):
         if slotStatus[target] is not None:
+            dmg = self.getDmg()
+            if(random.randint(self.crit,100) == 100):
+                dmg = 9999
+                crit.play()
             slash.play()
             self.hp += self.vamp
             if(self.hp > self.maxHp):
                 self.hp = self.maxHp
             self.isAttacking = True
             self.attackStart = pygame.time.get_ticks()
-            slotStatus[target].getHit(self.getDmg())
+            slotStatus[target].getHit(dmg)
             return target
         return None
 

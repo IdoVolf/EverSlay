@@ -217,7 +217,7 @@ while run:
 
         if(player.xp >= requiredXp):
             player.xp = 0
-            requiredXp = round(requiredXp * 1.3)
+            requiredXp = round(requiredXp * 1.15)
             gameState,player = PassiveBuffs(player,window)
         
         player.maxHp = player.baseMaxHp + player.armHpB
