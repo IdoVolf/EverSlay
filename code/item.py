@@ -49,7 +49,7 @@ defensePI = pygame.image.load(resource_path("assets/items/defenseP.png"))
 attackPI = pygame.image.load(resource_path("assets/items/attackPotion.png"))
 bombI = pygame.image.load(resource_path("assets/items/bomb.png"))
 mediI = pygame.image.load(resource_path("assets/items/mediBag.png"))
-
+panI = pygame.image.load(resource_path("assets/items/pan.png"))
 
 gem = Item("Gem","a rare stone worth - 50G",gemI,sell)
 healthPoition = Item("Health Potion","A poition that heals..",healthI,heal)
@@ -66,11 +66,12 @@ defenseP = Item("Defense potion","gives you defense",defensePI,addDefenseBoost)
 attackP = Item("attack potion","give you attack bonous for 1 attack",attackPI,addDmg)
 bomb = Item("bomb","a bomb can be used once after destroyed becomes a stick..",bombI,Bomb)
 mediBag = Item("medi bag","low defense more max hp..",mediI,changeArmor)
+pan = Item("frying pan","a huge crit chance somehow..",panI,changeWeapon)
 
-treasures = [gem,gem,gem,healthPoition,stick,crown,trash1,trash1,scythe,cupboard,dagger,defenseP,attackP,bomb,gem,trash1,gem,axe,gem]
-equipables = [axe,stick,crown,scythe,chestplate,cupboard,dagger,mace,bomb,mediBag]
+treasures = [gem,gem,gem,healthPoition,stick,crown,trash1,trash1,scythe,cupboard,dagger,defenseP,attackP,bomb,gem,trash1,gem,axe,gem,pan,dagger,trash1]
+equipables = [axe,stick,crown,scythe,chestplate,cupboard,dagger,mace,bomb,mediBag,pan]
 regularShop = [healthPoition,attackP,defenseP]
 regularBottom = [cupboard,dagger,crown]
-rare = [axe,chestplate,mace,bomb,mediBag]
+rare = [axe,chestplate,mace,bomb,mediBag,pan]
 g30Sell = [dagger,crown,axe,defenseP,healthPoition,attackP,chestplate,bomb,mediBag]
 g10Sell = [trash1,stick,cupboard,scythe]

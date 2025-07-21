@@ -46,7 +46,7 @@ def PassiveBuffs(player,window):
     maxHpB = Buff(rightPos,size,buffsAssets1[1],buffsAssets2[1],"max hp",maxHpF)
     vampB = Buff(rightPos,size,buffsAssets1[3],buffsAssets2[3],"vampire steal hp",vampF)
 
-    leftBuffs = [goldB,cheaperPotions]
+    leftBuffs = [goldB,cheaperPotions,critB]
     rightBuffs = [maxHpB,vampB]
 
     rightBuff = random.choice(rightBuffs)

@@ -6,7 +6,7 @@ import random
 pygame.mixer.init()
 
 weaponToDmg = {"stick":3,"scythe":7,"dagger":16,"annoying dog?":1,"bomb":40,"mace":30,
-               "axe":22}
+               "axe":22,"frying pan":3}
 armorToDefense = {"blue shirt":0.1,"medi bag":0.35,"cupboard":0.3,"crown":0.45,"chestplate":0.55}
 
 slashAnim = [pygame.image.load(resource_path("assets/uniqe/slash1.png")),pygame.image.load(resource_path("assets/uniqe/slash2.png")),
@@ -67,7 +67,7 @@ class Player:
     def attackMonster(self, slotStatus, target, slash):
         if slotStatus[target] is not None:
             dmg = self.getDmg()
-            if(random.randint(self.crit,100) == 100):
+            if(random.randint(self.crit,100) == 100 or (self.weapon == "frying pan" and (random.choice([0,0,1])==1))):
                 dmg = 9999
                 crit.play()
             slash.play()
