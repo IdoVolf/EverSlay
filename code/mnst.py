@@ -153,7 +153,6 @@ def spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlo
                 else:
                     newMonst = generateRandomMnst(mnsAssets)
             if(mnsKilled % 50 == 0 and mnsKilled !=0):
-                monsterSlots.clear()
                 newMonst = generateBoss(mnsAssets)
                 mnsKilled +=1
 
