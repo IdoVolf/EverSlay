@@ -36,6 +36,9 @@ def Inventory(window, player):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return "game"
+            if(event.type == pygame.KEYDOWN):
+                if(event.key == pygame.K_1):
+                    return "game"
 
         count = 1
         for i in list(items.keys()):

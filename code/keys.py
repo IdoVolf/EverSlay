@@ -11,6 +11,11 @@ def displayText1(window, text, pos, font, color=(255, 255, 255)):
 
 
 def KeyShow(window):
+    winSize = (640, 380)
+    flags = pygame.RESIZABLE
+    fullscreen = False
+    display_info = pygame.display.Info()
+    fullscreen_size = (display_info.current_w, display_info.current_h)
     bg = [pygame.image.load(resource_path(f"assets/battle ui/bgs/keys/keyBg{i}.png"))  for i in range(1,6)]
     delay = 100
     currentF = 0
@@ -40,11 +45,23 @@ def KeyShow(window):
 
         displayText1(window,"other",(50,230),myFontBig,color)
         displayText1(window,"selecting target - left click",(50,260),myFont,color)
-        displayText1(window,"going back - window exit button",(50,280),myFont,color)
+        displayText1(window,"going back -  1 ",(50,280),myFont,color)
+        displayText1(window,"full screen - 0",(50,300),myFont,color)
 
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
                 return "menu",True
+            if(event.type == pygame.KEYDOWN):
+                if(event.key == pygame.K_1):
+                    return "menu",True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_0:  
+                    fullscreen = not fullscreen
+                    if fullscreen:
+                        window = pygame.display.set_mode(fullscreen_size, pygame.FULLSCREEN)
+                    else:
+                        window = pygame.display.set_mode(winSize, pygame.RESIZABLE)
+
 
         window.blit(cursor,mousePos)        
         pygame.display.update()

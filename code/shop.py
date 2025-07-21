@@ -82,6 +82,9 @@ def Shop(window, player, rareN):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return "game"
+            if(event.type == pygame.KEYDOWN):
+                if(event.key == pygame.K_1):
+                    return "game"
 
         # Cursor and update
         window.blit(cursor, mousePos)

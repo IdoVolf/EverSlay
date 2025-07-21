@@ -13,9 +13,16 @@ from displayInfo import displayPlayerInfo ,displayMonsterInfo
 pygame.init()
 pygame.mixer.init()
 
+
 winSize = (640, 380)
-window = pygame.display.set_mode(winSize)
-pygame.display.set_caption("EverSlay")
+flags = pygame.RESIZABLE
+window = pygame.display.set_mode(winSize, flags)
+
+fullscreen = False
+
+display_info = pygame.display.Info()
+fullscreen_size = (display_info.current_w, display_info.current_h)
+
 icon = pygame.image.load(resource_path("assets/btns/playBtn1.png"))
 pygame.display.set_icon(icon)
 clock = pygame.time.Clock()
@@ -98,6 +105,15 @@ while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameState = "menu"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_0:  # Your toggle key
+                    fullscreen = not fullscreen
+                    if fullscreen:
+                        # Go fullscreen at native desktop resolution
+                        window = pygame.display.set_mode(fullscreen_size, pygame.FULLSCREEN)
+                    else:
+                        # Back to windowed resizable with your original size
+                        window = pygame.display.set_mode(winSize, pygame.RESIZABLE)
 
         gameState = player.die(window)
         for btn in btns:
