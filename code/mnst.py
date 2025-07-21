@@ -8,11 +8,12 @@ pygame.mixer.init()
 coinDrop = pygame.mixer.Sound(resource_path("assets/sound/coinDrop.mp3"))
 
 class Monster:
-    def __init__(self,assets,hp,attack,defense,scale,pos= (260,148)):
+    def __init__(self,assets,hp,attack,defense,scale,type,pos= (260,148)):
         self.assets = assets # a list of pygame images not file paths! (planing to laod the images when game start )
         self.hp =hp
         self.attack = attack
         self.defense = defense
+        self.type = type
         self.pos = pos
         self.currentFrame = 0
         self.animDelay = 100
@@ -75,14 +76,14 @@ monsterMedDefs = [0.2,0.25,0.3,0.35]
 monsterHardDefs = [0.3,0.35,0.4,0.45,0.5,0.55]
 
 def generateRandomMnst(assets):
-    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),round(random.choice(monstereastDefs),2),(88,88))
+    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(5,10),random.randint(4,8),round(random.choice(monstereastDefs),2),(88,88),"easy")
     
 
 def generateMedMnst(assets):
-    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(15,30),random.randint(10,15),round(random.choice(monsterMedDefs),2),(88,88))
+    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(15,30),random.randint(10,15),round(random.choice(monsterMedDefs),2),(88,88),"med")
 
 def generateHardMnst(assets):
-    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(35,55),random.randint(17,25),round(random.choice(monsterHardDefs),2),(88,88))
+    return Monster(assets[random.randint(0,len(assets)-1)],random.randint(35,55),random.randint(17,25),round(random.choice(monsterHardDefs),2),(88,88),"hard")
 
 indic = [pygame.image.load(resource_path("assets/uniqe/indicator/indicator1.png")),
          pygame.image.load(resource_path("assets/uniqe/indicator/indicator2.png")),

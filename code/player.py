@@ -18,6 +18,7 @@ class Player:
         self.weapon = "scythe"
         self.armor = "blue shirt"
         self.maxHp = 50
+        self.baseMaxHp =50
         self.monsterKilled = 0
         self.isAttacking = False
         self.attackStart = 0
@@ -30,6 +31,9 @@ class Player:
         self.bombTurns = 0
         self.goldGain = 50
         self.pPrice = 75
+        self.vamp = 0
+        self.armHpB = 0
+        self.xp =0
         self.inventory = {}
 
 
@@ -59,6 +63,9 @@ class Player:
     def attackMonster(self, slotStatus, target, slash):
         if slotStatus[target] is not None:
             slash.play()
+            self.hp += self.vamp
+            if(self.hp > self.maxHp):
+                self.hp = self.maxHp
             self.isAttacking = True
             self.attackStart = pygame.time.get_ticks()
             slotStatus[target].getHit(self.getDmg())

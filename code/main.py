@@ -10,6 +10,7 @@ from item import treasures ,rare
 import random
 from shop import Shop
 from displayInfo import displayPlayerInfo ,displayMonsterInfo
+from passive import PassiveBuffs
 pygame.init()
 pygame.mixer.init()
 
@@ -80,6 +81,9 @@ hardScale = 0
 newKill = True
 rareN = random.randint(0,len(rare)-1)
 defBoostActive = False
+dif = ["easy","med","hard"]
+xps = [1,2,3]
+requiredXp = 15
 
 while run:
     if gameState == "menu":
@@ -96,6 +100,7 @@ while run:
         hardScale = 0
         newKill = True
         rareN = random.randint(0,len(rare)-1)
+        requiredXp  = 15
     elif gameState == "game":
         now = pygame.time.get_ticks()
         mousePoS = pygame.mouse.get_pos()
@@ -162,6 +167,7 @@ while run:
                     target = i  
             
                 if mns.hp < 1:
+                    player.xp += xps[dif.index(mns.type)]
                     die.play()
                     if(not newKill):
                         newKill = True
@@ -205,9 +211,16 @@ while run:
             lastFrame, frame = drawIndicator(window, indicPoses[target], lastFrame, delay, frame)
 
         if(player.armor == "medi bag"):
-            player.maxHp = 70
+            player.armHpB = 20
         else:
-            player.maxHp =50
+            player.armHpB = 0
+
+        if(player.xp >= requiredXp):
+            player.xp = 0
+            requiredXp = round(requiredXp * 1.3)
+            gameState,player = PassiveBuffs(player,window)
+        
+        player.maxHp = player.baseMaxHp + player.armHpB
         displayPlayerInfo(window,player)
         window.blit(cursor, mousePoS)
         pygame.display.update()
