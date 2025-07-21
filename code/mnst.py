@@ -103,16 +103,16 @@ def drawIndicator(window, pos, lastFrame, delay, frame):
     window.blit(pygame.transform.scale(indic[frame],(48,48)), pos)
     return lastFrame, frame
 
-def scaleDiff(playerMonsteredKilled,scale,hardScale,newKill,rare,rareN,pGold):
+def scaleDiff(playerMonsteredKilled,scale,hardScale,newKill,rare,rareN,pGold,pGain):
         if(playerMonsteredKilled % 10 == 0 and playerMonsteredKilled != 0 and newKill and scale < 7 and hardScale < 10):
             hardScale +=1
             scale +=1
             newKill = False 
-            pGold +=50
+            pGold += pGain
             rareN = random.randint(0,len(rare)-1)
         elif(playerMonsteredKilled % 10 == 0 and newKill and playerMonsteredKilled !=0):
             newKill = False
-            pGold +=50
+            pGold += pGain
             rareN = random.randint(0,len(rare)-1)
         return hardScale,scale,newKill,rareN,pGold
 

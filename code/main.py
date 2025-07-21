@@ -195,7 +195,7 @@ while run:
         # Adjust encounter number by monsters killed
         encounterNum = encounterScale(player.monsterKilled)
         #diff scale
-        hardScale,scale,newKill,rareN,player.gold= scaleDiff(player.monsterKilled,scale,hardScale,newKill,rare,rareN,player.gold)
+        hardScale,scale,newKill,rareN,player.gold= scaleDiff(player.monsterKilled,scale,hardScale,newKill,rare,rareN,player.gold,player.goldGain)
         turn, lastTurnTime, turnIndex, player = monsterAttack(turn, now, lastTurnTime, turnIndex, monsters, bite, player)
         # Only reduce defense boost during monster turn
 

@@ -28,6 +28,8 @@ class Player:
         self.attackBoost = 1
         self.attackBoostTurns = 0
         self.bombTurns = 0
+        self.goldGain = 50
+        self.pPrice = 75
         self.inventory = {}
 
 
