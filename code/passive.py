@@ -2,7 +2,11 @@ import pygame
 from reso import resource_path
 import random
 from buff import Buff
+from menu import displayText
 pygame.init()
+
+myFont = pygame.font.Font(None, 24)
+FontBig = pygame.font.Font(None, 42)
 
 def goldF(player):
     player.goldGain +=15
@@ -56,11 +60,13 @@ def PassiveBuffs(player,window):
         mousePos = pygame.mouse.get_pos()
         mousePressed = pygame.mouse.get_pressed()
         window.blit(bg,bg.get_rect())
-
+        displayText(window,f"Chosse a buff",(245,100),FontBig)
         for buff in buffs:
             buff.draw(window,mousePos)
             buff.update(mousePressed)
             player,clicked = buff.isClicked(mousePos,mousePressed,player)
+            if(buff.isHovered(mousePos)):
+                displayText(window,f"{buff.name}",(mousePos[0],mousePos[1]-20),myFont)
             if(clicked):
                 return "game",player
             

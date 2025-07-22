@@ -25,7 +25,7 @@ def addDmg(player):
 
 def Bomb(player):
     player.weapon = "bomb"
-    player.bombTurns =2
+    player.bombTurns =3
 
 class Item:
     def __init__(self, name, description, icon, effectFunc):
@@ -64,9 +64,9 @@ dagger = Item("dagger","a dagger...",daggerI,changeWeapon)
 mace = Item("mace","a stick with pointy metal ball on top",maceI,changeWeapon)
 defenseP = Item("Defense potion","gives you defense",defensePI,addDefenseBoost)
 attackP = Item("attack potion","give you attack bonous for 1 attack",attackPI,addDmg)
-bomb = Item("bomb","a bomb can be used once after destroyed becomes a stick..",bombI,Bomb)
+bomb = Item("bomb","a bomb can be used 3 times after destroyed becomes a sycthe..",bombI,Bomb)
 mediBag = Item("medi bag","low defense more max hp..",mediI,changeArmor)
-pan = Item("frying pan","a huge crit chance somehow..",panI,changeWeapon)
+pan = Item("frying pan","a huge crit chance somehow.. if crit turn to scythe",panI,changeWeapon)
 
 treasures = [gem,gem,gem,healthPoition,stick,crown,trash1,trash1,scythe,cupboard,dagger,defenseP,attackP,bomb,gem,trash1,gem,axe,gem,pan,dagger,trash1]
 equipables = [axe,stick,crown,scythe,chestplate,cupboard,dagger,mace,bomb,mediBag,pan]

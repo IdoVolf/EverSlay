@@ -4,6 +4,7 @@ pygame.init()
 from death import Death
 import random
 pygame.mixer.init()
+from item import pan
 weaponToDmg = {"stick":3,"scythe":7,"dagger":16,"annoying dog?":1,"bomb":40,"mace":30,
                "axe":22,"frying pan":3}
 armorToDefense = {"blue shirt":0.1,"medi bag":0.35,"cupboard":0.3,"crown":0.45,"chestplate":0.55}
@@ -13,7 +14,8 @@ slashAnim = [pygame.image.load(resource_path("assets/uniqe/slash1.png")),pygame.
              pygame.image.load(resource_path("assets/uniqe/slash5.png")),pygame.image.load(resource_path("assets/uniqe/slash6.png")),
              pygame.image.load(resource_path("assets/uniqe/slash7.png")),pygame.image.load(resource_path("assets/uniqe/slash8.png"))]
 crit = pygame.mixer.Sound(resource_path("assets/sound/crit.mp3"))
-
+exxplode = pygame.mixer.Sound(resource_path("assets/sound/bomb.mp3"))
+bombAnim = [pygame.image.load(resource_path(f"assets/uniqe/bomb/exp{i}.png")) for i in range(1,9)]
 class Player:
     def __init__(self):
         self.hp = 50
@@ -35,6 +37,7 @@ class Player:
         self.pPrice = 75
         self.vamp = 0
         self.armHpB = 0
+        self.battleAnim = slashAnim
         self.xp =0
         self.crit = 3 #%
         self.inventory = {}
@@ -57,7 +60,7 @@ class Player:
             now = pygame.time.get_ticks()
             if(now - self.attackStart < self.attackDuration):
                 frame  = (now - self.attackStart) // (self.attackDuration // 8)
-                img = slashAnim[int(frame)]
+                img = self.battleAnim[int(frame)]
                 img = pygame.transform.scale(img,(88,88))
                 window.blit(img,pos)
             else:
@@ -67,9 +70,17 @@ class Player:
         if slotStatus[target] is not None:
             dmg = self.getDmg()
             if((random.randint(self.crit,100) == 100) or (self.weapon == "frying pan" and (random.choice([0,1])==1))):
+                if(self.weapon == "frying pan"):
+                    exxplode.play()
+                    self.weapon = "scythe"
                 dmg = 9999
                 crit.play()
-            slash.play()
+            if(self.weapon != "bomb"):
+                slash.play()
+                self.battleAnim = slashAnim
+            else:
+                self.battleAnim = bombAnim
+                exxplode.play()
             self.hp += self.vamp
             if(self.hp > self.maxHp):
                 self.hp = self.maxHp

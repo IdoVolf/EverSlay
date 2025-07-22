@@ -13,7 +13,7 @@ from displayInfo import displayPlayerInfo ,displayMonsterInfo
 from passive import PassiveBuffs
 pygame.init()
 pygame.mixer.init()
-
+turnChanged = True
 
 winSize = (640, 380)
 flags = pygame.RESIZABLE
@@ -125,21 +125,6 @@ while run:
             if btn.isClicked(mousePoS, mousePressed) and turn == "player" and not player.isAttacking:
                 click.play()
                 if btn.name == "fight":
-                    if player.defBoostTurns > 0:
-                     player.defBoostTurns -= 1
-                    if player.defBoostTurns == 0:
-                     player.defenseBoost = 1.0
-                    
-                    if(player.attackBoostTurns > 0):
-                        player.attackBoostTurns -=1
-                    if(player.attackBoostTurns == 0):
-                        player.attackBoost =1.0
-                    
-                    if(player.weapon == "bomb"):
-                        player.bombTurns -=1
-                        if(player.bombTurns == 0):
-                            player.weapon = "stick"
-                    
                     pos = player.attackMonster(slotStatus, target, slash)
                     if pos is not None:
                         slashPosCurrent = pos
@@ -164,7 +149,7 @@ while run:
                 handleMonster(mns, window)
                 if mns.isClicked(mousePoS, mousePressed) and turn == "player" and not player.isAttacking:
                     target = i  
-            
+
                 if mns.hp < 1:
                     player.xp += xps[dif.index(mns.type)]
                     die.play()
@@ -181,6 +166,7 @@ while run:
                     player.monsterKilled += 1
                     turn = "player"
                     killPriority = True
+                    turnChanged = True
             
                     if slotStatus[target] is None:
                         # Pick first alive slot or fallback to 0
@@ -191,6 +177,8 @@ while run:
                         else:
                             target = 0
                     break
+        if(turn == "monster" and not player.isAttacking):
+            turnChanged = True
 
         # Monster attack turn logic
         # Spawn monsters in empty slots
@@ -204,7 +192,25 @@ while run:
         turn, lastTurnTime, turnIndex, player = monsterAttack(turn, now, lastTurnTime, turnIndex, monsters, bite, player)
         # Only reduce defense boost during monster turn
 
-    
+        if turn == "player" and turnChanged:
+            if player.defBoostTurns > 0:
+                player.defBoostTurns -= 1
+            if player.defBoostTurns == 0:
+                player.defenseBoost = 1.0
+
+            if player.attackBoostTurns > 0:
+                player.attackBoostTurns -= 1
+            if player.attackBoostTurns == 0:
+                player.attackBoost = 1.0
+
+            if player.weapon == "bomb":
+                player.bombTurns -= 1
+                if player.bombTurns == 0:
+                    player.weapon = "scythe"
+
+            turnChanged = False  
+
+
         # Draw indicator on targeted slot (only if that slot is alive)
         if slotStatus[target] is not None:
             lastFrame, frame = drawIndicator(window, indicPoses[target], lastFrame, delay, frame)
