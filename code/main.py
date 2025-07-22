@@ -81,8 +81,8 @@ hardScale = 0
 newKill = True
 rareN = random.randint(0,len(rare)-1)
 defBoostActive = False
-dif = ["easy","med","hard"]
-xps = [1,2,3]
+dif = ["easy","med","hard","BOSS"]
+xps = [1,2,3,10]
 requiredXp = 10
 while run:
     if gameState == "menu":
