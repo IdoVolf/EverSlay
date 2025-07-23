@@ -41,7 +41,7 @@ def Shop(window, player, rareN):
 
             if nameRect.collidepoint(mousePos):
                 displayText(window, item.description, (110,10), font, (0, 0, 0))
-                if mousePressed[2] and player.gold >= pricesTop[i] and now - lastPurchase > buyDelay:
+                if mousePressed[2] and player.gold >= pricesTop[i] and now - lastPurchase > buyDelay and len(player.inventory) <7:
                     lastPurchase = now
                     player.gold -= pricesTop[i]
                     purchaseSound.play()
@@ -56,7 +56,7 @@ def Shop(window, player, rareN):
 
         if rareRect.collidepoint(mousePos):
             displayText(window, rareItem.description, (110,10), font, (255, 215, 100))
-            if mousePressed[2] and player.gold >= rarePrice and now - lastPurchase > buyDelay:
+            if mousePressed[2] and player.gold >= rarePrice and now - lastPurchase > buyDelay and len(player.inventory) <7:
                 lastPurchase = now
                 player.gold -= rarePrice
                 purchaseSound.play()
@@ -72,7 +72,7 @@ def Shop(window, player, rareN):
 
             if nameRect.collidepoint(mousePos):
                 displayText(window, item.description, (110,10), font, (0, 0, 0))
-                if mousePressed[2] and player.gold >= pricesBottom[i] and now - lastPurchase > buyDelay:
+                if mousePressed[2] and player.gold >= pricesBottom[i] and now - lastPurchase > buyDelay and len(player.inventory) < 7:
                     lastPurchase = now
                     player.gold -= pricesBottom[i]
                     purchaseSound.play()

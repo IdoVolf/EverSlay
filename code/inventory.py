@@ -32,6 +32,7 @@ def Inventory(window, player):
 
         window.blit(bg, bg.get_rect())
         window.blit(cursor, mousePos)
+        displayText(window,f"Space left (without duplicates) : {7-len(player.inventory)}",(20,15),myFont)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
