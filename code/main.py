@@ -156,12 +156,18 @@ while run:
                     if(not newKill):
                         newKill = True
                     trs = random.randint(0,len(treasures)-1)
-                    if(bool(random.choice([0,0,1]) ==1) and len(player.inventory) < 7): 
-                        treasureSe.play()
-                        if(treasures[trs] in player.inventory):
-                            player.inventory[treasures[trs]] = player.inventory[treasures[trs]] +1
+                    if(bool(random.choice([0,0,1]) ==1)):
+                        if(len(player.inventory) < 7): 
+                            treasureSe.play()
+                            if(treasures[trs] in player.inventory):
+                                player.inventory[treasures[trs]] = player.inventory[treasures[trs]] +1
+                            else:
+                                player.inventory[treasures[trs]] = 1
                         else:
-                            player.inventory[treasures[trs]] = 1
+                            if(treasures[trs] in player.inventory):
+                                player.inventory[treasures[trs]] = player.inventory[treasures[trs]] +1
+                                treasureSe.play()
+                                
                     slotStatus[i] = None
                     player.monsterKilled += 1
                     turn = "player"
