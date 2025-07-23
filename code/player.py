@@ -40,7 +40,7 @@ class Player:
         self.battleAnim = slashAnim
         self.xp =0
         self.crit = 3 #%
-        self.inventory = {mace:1}
+        self.inventory = {}
 
 
     def getDmg(self):
