@@ -17,11 +17,11 @@ def sell(player,price):
 
 def addDefenseBoost(player):
     player.defenseBoost = 1.5
-    player.defBoostTurns =2
+    player.defBoostTurns =1
 
 def addDmg(player):
         player.attackBoost = 1.5
-        player.attackBoostTurns = 2
+        player.attackBoostTurns = 1
 
 def Bomb(player):
     player.weapon = "bomb"

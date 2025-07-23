@@ -4,7 +4,7 @@ pygame.init()
 from death import Death
 import random
 pygame.mixer.init()
-from item import pan
+from item import defenseP
 weaponToDmg = {"stick":3,"scythe":7,"dagger":16,"annoying dog?":1,"bomb":40,"mace":30,
                "axe":22,"frying pan":3}
 armorToDefense = {"blue shirt":0.1,"medi bag":0.35,"cupboard":0.3,"crown":0.45,"chestplate":0.55}
