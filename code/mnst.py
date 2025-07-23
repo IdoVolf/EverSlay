@@ -121,7 +121,7 @@ def scaleDiff(playerMonsteredKilled,scale,hardScale,newKill,rare,rareN,pGold,pGa
         return hardScale,scale,newKill,rareN,pGold
 
 def encounterScale(mnsKilled):
-    if(mnsKilled == 49 or mnsKilled == 50):
+    if(mnsKilled % 50 == 0 and (mnsKilled -1) % 50 == 0):
         return 1
     if mnsKilled != 0:
         if mnsKilled % 5 == 0:
@@ -156,8 +156,6 @@ def spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlo
                     newMonst = generateHardMnst(mnsAssets)
                 else:
                     newMonst = generateRandomMnst(mnsAssets)
-            if(mnsKilled % 50 == 0 and mnsKilled !=0 ):
-                newMonst = generateBoss(mnsAssets)
 
             newMonst.pos = monsterSlots[i]
             slotStatus[i] = newMonst

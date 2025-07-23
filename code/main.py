@@ -37,7 +37,7 @@ player = Player()
 killPriority = False
 # Target is now the slot index: 0=left, 1=center, 2=right
 target = 1
-
+pygame.display.set_caption("EverSlay")
 delay = 100
 lastFrame = 0
 frame = 0
