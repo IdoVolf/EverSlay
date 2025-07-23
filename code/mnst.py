@@ -154,7 +154,14 @@ def spawnLogic(slotStatus, encounterNum,  mnsAssets, monsterSlots,mnsKilled):
                 else:
                     newMonst =generateRandomMnst(mnsAssets)
             else:
-                newMonst = generateRandomMnst(mnsAssets)
+                harderPlus = (random.randint(1,5) ==5)
+                harderMns = (random.randint(1,3) == 3)
+                if(harderPlus):
+                    newMonst = generateHardMnst(mnsAssets)
+                elif(harderMns):
+                    newMonst = generateMedMnst(mnsAssets)
+                else:
+                    newMonst =generateRandomMnst(mnsAssets)
             newMonst.pos = monsterSlots[i]
             slotStatus[i] = newMonst
             break
