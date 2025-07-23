@@ -22,3 +22,9 @@ class Background:
         window.blit(img,self.pos)
 
 
+def changeBg(mnsKilled,bgN):
+    if(mnsKilled % 25 != 0):
+        return bgN
+    if(mnsKilled // 25 > 4):
+        return bgN
+    return mnsKilled // 25

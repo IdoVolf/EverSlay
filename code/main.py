@@ -11,6 +11,7 @@ import random
 from shop import Shop
 from displayInfo import displayPlayerInfo ,displayMonsterInfo
 from passive import PassiveBuffs
+from bg import changeBg
 pygame.init()
 pygame.mixer.init()
 turnChanged = True
@@ -44,6 +45,7 @@ frame = 0
 
 myFont = pygame.font.Font(None, 24)
 bg = pygame.image.load(resource_path("assets/battle ui/battleBox.png"))
+bgms = [pygame.image.load(resource_path(f"assets/battle ui/bgs/bgm{i}.png")) for i in range(1,5)]
 cursor = pygame.image.load(resource_path("assets/cursors/crs1.png"))
 mnsAssets = loadMonsterAssets(resource_path("assets/mns"))
 
@@ -83,7 +85,8 @@ rareN = random.randint(0,len(rare)-1)
 defBoostActive = False
 dif = ["easy","med","hard","BOSS"]
 xps = [1,2,3,10]
-requiredXp = 10
+requiredXp = 8
+currentBg = 0
 while run:
     if gameState == "menu":
         gameState, run = menu(window)
@@ -99,11 +102,12 @@ while run:
         hardScale = 0
         newKill = True
         rareN = random.randint(0,len(rare)-1)
-        requiredXp  = 10
+        requiredXp  = 8
     elif gameState == "game":
         now = pygame.time.get_ticks()
         mousePoS = pygame.mouse.get_pos()
         mousePressed = pygame.mouse.get_pressed()
+        window.blit(bgms[currentBg],(38,33))
         window.blit(bg, bg.get_rect())
 
         for event in pygame.event.get():
@@ -156,8 +160,8 @@ while run:
                     if(not newKill):
                         newKill = True
                     trs = random.randint(0,len(treasures)-1)
-                    if(bool(random.choice([0,0,1]) ==1)):
-                        if(len(player.inventory) < 7): 
+                    if(bool(random.choice([0,0,0,1]) ==1)):
+                        if(len(player.inventory) < 6): 
                             treasureSe.play()
                             if(treasures[trs] in player.inventory):
                                 player.inventory[treasures[trs]] = player.inventory[treasures[trs]] +1
@@ -167,7 +171,7 @@ while run:
                             if(treasures[trs] in player.inventory):
                                 player.inventory[treasures[trs]] = player.inventory[treasures[trs]] +1
                                 treasureSe.play()
-                                
+
                     slotStatus[i] = None
                     player.monsterKilled += 1
                     turn = "player"
@@ -188,7 +192,7 @@ while run:
 
         # Monster attack turn logic
         # Spawn monsters in empty slots
-        slotStatus, monsters = spawnLogic(slotStatus, encounterNum, scale, hardScale, mnsAssets, monsterSlots,player.monsterKilled)
+        slotStatus, monsters = spawnLogic(slotStatus, encounterNum,   mnsAssets, monsterSlots,player.monsterKilled)
         # Player attack animation
         turn,lastTurnTime,killPriority = player.slashAnim(window,slashPoss,slashPosCurrent,lastTurnTime,turn,killPriority)
         # Adjust encounter number by monsters killed
@@ -197,7 +201,7 @@ while run:
         hardScale,scale,newKill,rareN,player.gold= scaleDiff(player.monsterKilled,scale,hardScale,newKill,rare,rareN,player.gold,player.goldGain)
         turn, lastTurnTime, turnIndex, player = monsterAttack(turn, now, lastTurnTime, turnIndex, monsters, bite, player)
         # Only reduce defense boost during monster turn
-
+        currentBg = changeBg(player.monsterKilled,currentBg)
         if turn == "player" and turnChanged:
             if player.defBoostTurns > 0:
                 player.defBoostTurns -= 1

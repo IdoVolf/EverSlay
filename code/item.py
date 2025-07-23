@@ -74,10 +74,10 @@ wand = Item("wand","a magic wand rare loot",wandI,changeWeapon)
 glasses = Item("glasses","sun glasses used for blocking the sun and (monsters?)",glassesI,changeArmor)
 hammer = Item("hammer","a big hammer a hit might break it and turn it to a dagger",hammerI,changeWeapon)
 
-treasures = [gem,gem,gem,healthPoition,stick,crown,trash1,hammer,trash1,scythe,glasses,glasses,cupboard,dagger,defenseP,attackP,bomb,gem,trash1,gem,axe,gem,pan,dagger,trash1,wand]
+treasures = [gem,gem,gem,healthPoition,stick,trash1,hammer,trash1,scythe,glasses,glasses,cupboard,dagger,defenseP,attackP,bomb,gem,trash1,gem,gem,pan,dagger,trash1,wand,gem,stick]
 equipables = [axe,stick,crown,scythe,chestplate,cupboard,dagger,mace,bomb,mediBag,pan,wand,glasses,hammer]
 regularShop = [healthPoition,attackP,defenseP]
 regularBottom = [cupboard,dagger,crown]
-rare = [axe,chestplate,mace,bomb,mediBag,pan,hammer]
+rare = [axe,chestplate,mace,bomb,mediBag,pan,hammer,axe,bomb]
 g30Sell = [dagger,crown,axe,defenseP,healthPoition,attackP,chestplate,bomb,mediBag,pan,wand,hammer]
 g10Sell = [trash1,stick,cupboard,scythe,glasses]

@@ -4,7 +4,7 @@ pygame.init()
 from death import Death
 import random
 pygame.mixer.init()
-from item import hammer
+from item import mace
 weaponToDmg = {"stick":3,"scythe":7,"dagger":16,"hammer":35,"bomb":40,"mace":30,
                "axe":22,"frying pan":3,"wand":25}
 armorToDefense = {"blue shirt":0.1,"medi bag":0.35,"cupboard":0.3,"crown":0.45,"chestplate":0.55,"glasses":0.2}
@@ -27,7 +27,7 @@ class Player:
         self.isAttacking = False
         self.attackStart = 0
         self.attackDuration = 800
-        self.gold = 100
+        self.gold = 50
         self.defenseBoost =1
         self.defBoostTurns =0
         self.attackBoost = 1
@@ -40,7 +40,7 @@ class Player:
         self.battleAnim = slashAnim
         self.xp =0
         self.crit = 3 #%
-        self.inventory = {}
+        self.inventory = {mace:1}
 
 
     def getDmg(self):
