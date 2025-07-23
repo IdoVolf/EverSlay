@@ -4,10 +4,10 @@ pygame.init()
 from death import Death
 import random
 pygame.mixer.init()
-from item import defenseP
-weaponToDmg = {"stick":3,"scythe":7,"dagger":16,"annoying dog?":1,"bomb":40,"mace":30,
-               "axe":22,"frying pan":3}
-armorToDefense = {"blue shirt":0.1,"medi bag":0.35,"cupboard":0.3,"crown":0.45,"chestplate":0.55}
+from item import hammer
+weaponToDmg = {"stick":3,"scythe":7,"dagger":16,"hammer":35,"bomb":40,"mace":30,
+               "axe":22,"frying pan":3,"wand":25}
+armorToDefense = {"blue shirt":0.1,"medi bag":0.35,"cupboard":0.3,"crown":0.45,"chestplate":0.55,"glasses":0.2}
 
 slashAnim = [pygame.image.load(resource_path("assets/uniqe/slash1.png")),pygame.image.load(resource_path("assets/uniqe/slash2.png")),
              pygame.image.load(resource_path("assets/uniqe/slash3.png")),pygame.image.load(resource_path("assets/uniqe/slash4.png")),
@@ -75,9 +75,14 @@ class Player:
                     self.weapon = "scythe"
                 dmg = 9999
                 crit.play()
-            if(self.weapon != "bomb"):
+            if(self.weapon != "bomb" and self.weapon != "wand"):
                 slash.play()
                 self.battleAnim = slashAnim
+                if(self.weapon == "hammer"):
+                    choice = (random.randint(1,10) == 9)
+                    if(choice):
+                        exxplode.play()
+                        self.weapon = "dagger"
             else:
                 self.battleAnim = bombAnim
                 exxplode.play()
